@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { StudentsRouter } from './routes';
+import { routers } from './routes/index.js';
 
 export class Server {
 
@@ -20,7 +20,7 @@ export class Server {
     }
 
     routes() {
-        this.app.use(this.paths.students, StudentsRouter);
+        this.app.use(this.paths.students, routers.studentsRouter);
     }
 
     middlewares() {
