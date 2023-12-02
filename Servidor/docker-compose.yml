@@ -7,7 +7,7 @@ services:
     container_name: 'db'
     environment:
       - MYSQL_DATABASE=minisitec
-      - MYSQL_ROOT_PASSWORD=proyecto
+      - MYSQL_ROOT_PASSWORD=minisitec
     ports:
       - '3306:3307'
     volumes:

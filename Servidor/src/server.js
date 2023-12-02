@@ -1,4 +1,6 @@
 import express from 'express';
+import cors from 'cors';
+import { StudentsRouter } from './routes';
 
 export class Server {
 
@@ -18,11 +20,12 @@ export class Server {
     }
 
     routes() {
-
+        this.app.use(this.paths.students, StudentsRouter);
     }
 
     middlewares() {
-
+        this.app.use(express.json());
+        this.app.use(cors());
     }
 
     initDb() {
