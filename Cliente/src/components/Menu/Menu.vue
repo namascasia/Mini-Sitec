@@ -4,17 +4,27 @@
 
 <template>
     <header class="header">
-        <section class="container">
-            <article class="logo">
-                <h1>Menu</h1>
-            </article>
-            <nav class="menu">
-                <a href="">Grupos</a>
-                <a href="">Materias</a>
-                <a href="">Alumnos</a>
-                <a href="">Maestros</a>
-            </nav>
-        </section>
+        <h2>Menu</h2>
+        <nav class="nav">
+            <ul>
+                <li class="list_item">
+                    <img src="/img/user-groups.png" alt="User icon">
+                    Grupos
+                </li>
+                <li class="list_item">
+                    <img src="/img/books.png" alt="User icon">
+                    Materias
+                </li>
+                <li class="list_item">
+                    <img src="/img/user.png" alt="User icon">
+                    Alumnos
+                </li>
+                <li class="list_item">
+                    <img src="/img/teacher.png" alt="User icon">
+                    Maestros
+                </li>
+            </ul>
+        </nav>
     </header>
 </template>
 
