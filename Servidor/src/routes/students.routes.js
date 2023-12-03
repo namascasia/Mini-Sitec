@@ -15,5 +15,4 @@ router.put('/update/:id', studentsController.updateStudent);
 
 router.delete('/delete/:id', studentsController.deleteStudent);
 
-
 export default router;

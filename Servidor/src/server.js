@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { routers } from './routes/index.js';
+import { connection } from './db/connection.js';
 
 export class Server {
 
@@ -28,8 +29,13 @@ export class Server {
         this.app.use(cors());
     }
 
-    initDb() {
-
+    async initDb() {
+        try {
+            await connection.connect;
+            console.log('base de datos conectada');
+        } catch (error) {
+            console.log(`No se pudo conectar a la base de datos ${error}`);
+        }
     }
 
     listen() {

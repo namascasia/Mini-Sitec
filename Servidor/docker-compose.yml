@@ -4,11 +4,11 @@ services:
   mySQL:
     image: mysql:latest
     restart: always
-    container_name: 'db'
+    container_name: 'proyecto_web'
     environment:
       - MYSQL_DATABASE=minisitec
       - MYSQL_ROOT_PASSWORD=minisitec
     ports:
-      - '3306:3307'
+      - '3307:3306'
     volumes:
       - ./SQL:/docker-entrypoint-initdb.d
