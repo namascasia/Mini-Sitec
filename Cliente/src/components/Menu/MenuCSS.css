@@ -29,15 +29,24 @@
     transition: all 0.3s;
     cursor: pointer;
     display: flex;
+    gap: 5px;
     justify-content: center;
     align-items: center;
-    gap: 5px;
+
+    & a {
+        text-decoration: none;
+        color: #f2f2f2;
+        display: flex;
+        gap: 5px;
+        justify-content: center;
+        align-items: center;
+    }
 
     & img {
         filter: invert(1);
     }
 
     &:hover {
-        filter: brightness(105%);
+        filter: brightness(110%);
     }
 }

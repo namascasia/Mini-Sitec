@@ -4,9 +4,10 @@ import Menu from './components/Menu/Menu.vue';
 </script>
 
 <template>
-    <router-view>
+    <main class="main">
         <Menu />
-    </router-view>
+        <router-view></router-view>
+    </main>
 </template>
 
 

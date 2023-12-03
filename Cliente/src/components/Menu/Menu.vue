@@ -1,4 +1,7 @@
 <script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter();
 
 </script>
 
@@ -7,19 +10,19 @@
         <h2>Menu</h2>
         <nav class="nav">
             <ul>
-                <li class="list_item">
+                <li @click="router.push('/grupos')" class="list_item">
                     <img src="/img/user-groups.png" alt="User icon">
                     Grupos
                 </li>
-                <li class="list_item">
+                <li @click="router.push('/materias')" class="list_item">
                     <img src="/img/books.png" alt="User icon">
                     Materias
                 </li>
-                <li class="list_item">
+                <li @click="router.push('/alumnos')" class="list_item">
                     <img src="/img/user.png" alt="User icon">
                     Alumnos
                 </li>
-                <li class="list_item">
+                <li @click="router.push('/maestros')" class="list_item">
                     <img src="/img/teacher.png" alt="User icon">
                     Maestros
                 </li>

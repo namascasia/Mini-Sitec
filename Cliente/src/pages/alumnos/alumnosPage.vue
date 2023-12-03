@@ -1,9 +1,8 @@
 <script setup>
-    import Menu from '../../components/Menu/Menu.vue';
 </script>
 
 <template>
-    <Menu />
+    <h2>Alumnos page</h2>
 </template>
 
 <style scoped src="./alumnosPageCSS.css"></style>
