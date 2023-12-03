@@ -5,20 +5,18 @@ import { schemas } from "../entities/schemas.js";
 import { and, eq } from "drizzle-orm";
 import { ACTIVE, DELETED } from "../utils/constants/constants.js";
 
-export class StudentsController {
-
-
-    async getStudents(req = request, res = response) {
+export class TeachersController {
+    async getTeachers(req = request, res = response) {
         try {
 
-            const students = await db.select()
-                .from(schemas.students)
-                .where(eq(schemas.students.status, ACTIVE));
+            const teachers = await db.select()
+                .from(schemas.teachers)
+                .where(eq(schemas.teachers.status, ACTIVE));
 
 
             res.json({
-                data: students,
-                message: 'Estudiantes consultados exitosamente',
+                data: teachers,
+                message: 'Maestros consultados exitosamente',
                 code: HTTP_CODES.OK
             })
 
@@ -32,29 +30,29 @@ export class StudentsController {
         }
     }
 
-    async getStudent(req = request, res = response) {
-        const studentId = req.params.id;
+    async getTeacher(req = request, res = response) {
+        const teacherId = req.params.id;
 
         try {
-            const [student] = await db.select()
-                .from(schemas.students)
+            const [teacher] = await db.select()
+                .from(schemas.teachers)
                 .where(and(
-                    eq(schemas.students.nControl, studentId),
-                    eq(schemas.students.status, ACTIVE)
+                    eq(schemas.teachers.id, teacherId),
+                    eq(schemas.teachers.status, ACTIVE_teacher)
                 ));
 
-            if (!student) {
+            if (!teacher) {
                 return res.status(HTTP_CODES.BAD_REQUEST).json({
                     data: null,
-                    message: `El estudiante con el id ${studentId} no existe`,
+                    message: `El Maestro con el id ${teacherId} no existe`,
                     code: HTTP_CODES.BAD_REQUEST
                 });
             }
 
 
             res.json({
-                data: student,
-                message: 'Estudiante consultado exitosamente',
+                data: teacher,
+                message: 'Maestro consultado exitosamente',
                 code: HTTP_CODES.OK
             });
         } catch (error) {
@@ -68,33 +66,34 @@ export class StudentsController {
 
     }
 
-    async createStudent(req = request, res = response) {
-        const { nControl, name, career, status } = req.body;
+    async createTeacher(req = request, res = response) {
+        const { id, name, department, status } = req.body;
         try {
 
-            const [student] = await db.select()
-                .from(schemas.students)
-                .where(eq(schemas.students.nControl, nControl));
+            const [teacher] = await db.select()
+                .from(schemas.teachers)
+                .where(eq(schemas.teachers.id, id));
 
-            if (student) {
+            if (teacher) {
                 return res.status(HTTP_CODES.BAD_REQUEST).json({
                     data: null,
-                    message: `El estudiante con el numero de control ${nControl} ya existe`,
+                    message: `El Maestro con el id ${id} ya existe`,
                     code: HTTP_CODES.BAD_REQUEST
                 });
             }
 
-            await db.insert(schemas.students).values({
-                nControl, name, career, status
+            await db.insert(schemas.teachers).values({
+                id, name, department, status
             });
 
             res.status(HTTP_CODES.CREATED).json({
                 data: null,
-                message: 'Estudiante creado exitosamente',
+                message: 'Maestro creado exitosamente',
                 code: HTTP_CODES.CREATED
             });
 
         } catch (error) {
+            console.log(error);
             res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).json({
                 data: null,
                 message: 'Ha ocurrido un error mientras se realizaba esta operacion.',
@@ -104,68 +103,67 @@ export class StudentsController {
 
     }
 
-    async updateStudent(req = request, res = response) {
+    async updateTeacher(req = request, res = response) {
         const { name, career, status } = req.body;
-        const studentId = req.params.id;
+        const teacherId = req.params.id;
 
         try {
 
-            const [student] = await db.select()
-                .from(schemas.students)
-                .where(eq(schemas.students.nControl, studentId));
+            const [teacher] = await db.select()
+                .from(schemas.teachers)
+                .where(eq(schemas.teachers.id, teacherId));
 
-            if (!student) {
+            if (!teacher) {
                 return res.status(HTTP_CODES.BAD_REQUEST).json({
                     data: null,
-                    message: `El estudiante con el numero de control ${nControl} no existe`,
+                    message: `El Maestro con el id ${id} no existe`,
                     code: HTTP_CODES.BAD_REQUEST
                 });
             }
 
 
-            await db.update(schemas.students)
+            await db.update(schemas.teachers)
                 .set({ name, career, status })
-                .where(eq(schemas.students.nControl, studentId));
+                .where(eq(schemas.teachers.id, teacherId));
 
             res.json({
                 data: null,
-                message: 'Estudiante actualizado correctamente',
+                message: 'Maestro actualizado correctamente',
                 code: HTTP_CODES.OK
             });
         } catch (error) {
-            console.log(error);
             res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).json({
-                data: error,
+                data: null,
                 message: 'Ha ocurrido un error mientras se realizaba esta operacion.',
                 code: HTTP_CODES.INTERNAL_SERVER_ERROR
             });
         }
     }
 
-    async deleteStudent(req = request, res = response) {
-        const studentId = req.params.id;
+    async deleteTeacher(req = request, res = response) {
+        const teacherId = req.params.id;
 
         try {
 
-            const [student] = await db.select()
-                .from(schemas.students)
-                .where(eq(schemas.students.nControl, studentId));
+            const [teacher] = await db.select()
+                .from(schemas.teachers)
+                .where(eq(schemas.teachers.id, teacherId));
 
-            if (!student) {
+            if (!teacher) {
                 return res.status(HTTP_CODES.BAD_REQUEST).json({
                     data: null,
-                    message: `El estudiante con el numero de control ${nControl} no existe`,
+                    message: `El Maestro con el id ${id} no existe`,
                     code: HTTP_CODES.BAD_REQUEST
                 });
             }
 
-            await db.update(schemas.students)
+            await db.update(schemas.teachers)
                 .set({ status: DELETED })
-                .where(eq(schemas.students.nControl, studentId));
+                .where(eq(schemas.teachers.id, teacherId));
 
             res.json({
                 data: null,
-                message: 'Estudiante eliminado correctamente',
+                message: 'Maestro eliminado correctamente',
                 code: HTTP_CODES.OK
             });
         } catch (error) {

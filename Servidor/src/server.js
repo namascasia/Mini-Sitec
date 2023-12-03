@@ -22,6 +22,7 @@ export class Server {
 
     routes() {
         this.app.use(this.paths.students, routers.studentsRouter);
+        this.app.use(this.paths.teachers, routers.teachersRouter);
     }
 
     middlewares() {
