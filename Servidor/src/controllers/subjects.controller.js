@@ -65,10 +65,43 @@ export class SubjectsController {
     }
 
     async updateSubject(req = request, res = response) {
+        const { name, credits } = req.body;
+        const subjectId = req.params.id;
+        try {
 
+            await db.update(schemas.subjects)
+                .set({ name, credits })
+                .where(eq(schemas.subjects.id, subjectId));
+
+            res.json({
+                data: null,
+                message: 'Materia actualizada correctamente'
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).json({
+                data: null,
+                message: 'Ha ocurrido un error al realizar esta operacion, contacte al administrador'
+            });
+        }
     }
 
     async deleteSubject(req = request, res = response) {
+        const subjectId = req.params.id;
 
+        try {
+            await db.delete(schemas.subjects).where(eq(schemas.subjects.id, subjectId));
+
+            res.json({
+                data: null,
+                message: 'Materia borrada exitosamente'
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).json({
+                data: null,
+                message: 'Ha ocurrido un error al realizar esta operacion, contacte al administrador'
+            });
+        }
     }
 }
