@@ -3,16 +3,14 @@ import { HTTP_CODES } from "../utils/constants/http-status-codes.js";
 import { db } from "../db/connection.js";
 import { schemas } from "../entities/schemas.js";
 import { and, eq } from "drizzle-orm";
-import { ACTIVE, DELETED } from "../utils/constants/constants.js";
+import { ACTIVE, DELETED, STATUS } from "../utils/constants/constants.js";
 
 export class TeachersController {
     async getTeachers(req = request, res = response) {
         try {
 
             const teachers = await db.select()
-                .from(schemas.teachers)
-                .where(eq(schemas.teachers.status, ACTIVE));
-
+                .from(schemas.teachers);
 
             res.json({
                 data: teachers,
@@ -74,6 +72,16 @@ export class TeachersController {
                 .from(schemas.teachers)
                 .where(eq(schemas.teachers.id, id));
 
+
+            if (teacher && teacher.status === STATUS.DELETED) {
+                await db.update(schemas.teachers).set({ status: STATUS.ACTIVE });
+                return res.status(HTTP_CODES.CREATED).json({
+                    data: null,
+                    message: 'Maestro creado exitosamente',
+                    code: HTTP_CODES.CREATED
+                });
+            }
+
             if (teacher) {
                 return res.status(HTTP_CODES.BAD_REQUEST).json({
                     data: null,
@@ -83,7 +91,7 @@ export class TeachersController {
             }
 
             await db.insert(schemas.teachers).values({
-                id, name, department, status
+                id, name: name.toUpperCase(), department, status
             });
 
             res.status(HTTP_CODES.CREATED).json({
@@ -104,7 +112,7 @@ export class TeachersController {
     }
 
     async updateTeacher(req = request, res = response) {
-        const { name, career, status } = req.body;
+        const { name, department } = req.body;
         const teacherId = req.params.id;
 
         try {
@@ -123,7 +131,7 @@ export class TeachersController {
 
 
             await db.update(schemas.teachers)
-                .set({ name, career, status })
+                .set({ name: name.toUpperCase(), department })
                 .where(eq(schemas.teachers.id, teacherId));
 
             res.json({

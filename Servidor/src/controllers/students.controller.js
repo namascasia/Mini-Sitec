@@ -3,18 +3,15 @@ import { HTTP_CODES } from "../utils/constants/http-status-codes.js";
 import { db } from "../db/connection.js";
 import { schemas } from "../entities/schemas.js";
 import { and, eq } from "drizzle-orm";
-import { ACTIVE, DELETED } from "../utils/constants/constants.js";
+import { STATUS } from "../utils/constants/constants.js";
 
 export class StudentsController {
-
 
     async getStudents(req = request, res = response) {
         try {
 
             const students = await db.select()
                 .from(schemas.students)
-                .where(eq(schemas.students.status, ACTIVE));
-
 
             res.json({
                 data: students,
@@ -33,24 +30,10 @@ export class StudentsController {
     }
 
     async getStudent(req = request, res = response) {
-        const studentId = req.params.id;
 
         try {
-            const [student] = await db.select()
-                .from(schemas.students)
-                .where(and(
-                    eq(schemas.students.nControl, studentId),
-                    eq(schemas.students.status, ACTIVE)
-                ));
 
-            if (!student) {
-                return res.status(HTTP_CODES.BAD_REQUEST).json({
-                    data: null,
-                    message: `El estudiante con el id ${studentId} no existe`,
-                    code: HTTP_CODES.BAD_REQUEST
-                });
-            }
-
+            const student = req.student;
 
             res.json({
                 data: student,
@@ -76,6 +59,15 @@ export class StudentsController {
                 .from(schemas.students)
                 .where(eq(schemas.students.nControl, nControl));
 
+            if (student && student.status === STATUS.DELETED) {
+                await db.update(schemas.students).set({ status: STATUS.ACTIVE });
+                return res.status(HTTP_CODES.CREATED).json({
+                    data: null,
+                    message: 'Estudiante creado exitosamente',
+                    code: HTTP_CODES.CREATED
+                });
+            }
+
             if (student) {
                 return res.status(HTTP_CODES.BAD_REQUEST).json({
                     data: null,
@@ -85,7 +77,7 @@ export class StudentsController {
             }
 
             await db.insert(schemas.students).values({
-                nControl, name, career, status
+                nControl, name: name.toUpperCase(), career, status
             });
 
             res.status(HTTP_CODES.CREATED).json({
@@ -105,7 +97,7 @@ export class StudentsController {
     }
 
     async updateStudent(req = request, res = response) {
-        const { name, career, status } = req.body;
+        const { name, career } = req.body;
         const studentId = req.params.id;
 
         try {
@@ -124,7 +116,7 @@ export class StudentsController {
 
 
             await db.update(schemas.students)
-                .set({ name, career, status })
+                .set({ name: name.toUpperCase(), career })
                 .where(eq(schemas.students.nControl, studentId));
 
             res.json({
@@ -160,7 +152,7 @@ export class StudentsController {
             }
 
             await db.update(schemas.students)
-                .set({ status: DELETED })
+                .set({ status: STATUS.DELETED })
                 .where(eq(schemas.students.nControl, studentId));
 
             res.json({
