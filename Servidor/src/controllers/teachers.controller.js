@@ -15,15 +15,13 @@ export class TeachersController {
             res.json({
                 data: teachers,
                 message: 'Maestros consultados exitosamente',
-                code: HTTP_CODES.OK
-            })
+            });
 
         } catch (error) {
             console.log(error);
             res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).json({
                 data: null,
                 message: 'Ha ocurrido un error mientras se realizaba esta operacion.',
-                code: HTTP_CODES.INTERNAL_SERVER_ERROR
             })
         }
     }
@@ -43,7 +41,6 @@ export class TeachersController {
                 return res.status(HTTP_CODES.BAD_REQUEST).json({
                     data: null,
                     message: `El Maestro con el id ${teacherId} no existe`,
-                    code: HTTP_CODES.BAD_REQUEST
                 });
             }
 
@@ -51,13 +48,11 @@ export class TeachersController {
             res.json({
                 data: teacher,
                 message: 'Maestro consultado exitosamente',
-                code: HTTP_CODES.OK
             });
         } catch (error) {
             res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).json({
                 data: null,
                 message: 'Ha ocurrido un error mientras se realizaba esta operacion.',
-                code: HTTP_CODES.INTERNAL_SERVER_ERROR
             });
         }
 
@@ -78,7 +73,6 @@ export class TeachersController {
                 return res.status(HTTP_CODES.CREATED).json({
                     data: null,
                     message: 'Maestro creado exitosamente',
-                    code: HTTP_CODES.CREATED
                 });
             }
 
@@ -86,7 +80,6 @@ export class TeachersController {
                 return res.status(HTTP_CODES.BAD_REQUEST).json({
                     data: null,
                     message: `El Maestro con el id ${id} ya existe`,
-                    code: HTTP_CODES.BAD_REQUEST
                 });
             }
 
@@ -97,7 +90,6 @@ export class TeachersController {
             res.status(HTTP_CODES.CREATED).json({
                 data: null,
                 message: 'Maestro creado exitosamente',
-                code: HTTP_CODES.CREATED
             });
 
         } catch (error) {
@@ -105,7 +97,6 @@ export class TeachersController {
             res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).json({
                 data: null,
                 message: 'Ha ocurrido un error mientras se realizaba esta operacion.',
-                code: HTTP_CODES.INTERNAL_SERVER_ERROR
             });
         }
 
@@ -125,7 +116,6 @@ export class TeachersController {
                 return res.status(HTTP_CODES.BAD_REQUEST).json({
                     data: null,
                     message: `El Maestro con el id ${id} no existe`,
-                    code: HTTP_CODES.BAD_REQUEST
                 });
             }
 
@@ -137,13 +127,11 @@ export class TeachersController {
             res.json({
                 data: null,
                 message: 'Maestro actualizado correctamente',
-                code: HTTP_CODES.OK
             });
         } catch (error) {
             res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).json({
                 data: null,
                 message: 'Ha ocurrido un error mientras se realizaba esta operacion.',
-                code: HTTP_CODES.INTERNAL_SERVER_ERROR
             });
         }
     }
@@ -161,7 +149,6 @@ export class TeachersController {
                 return res.status(HTTP_CODES.BAD_REQUEST).json({
                     data: null,
                     message: `El Maestro con el id ${id} no existe`,
-                    code: HTTP_CODES.BAD_REQUEST
                 });
             }
 
@@ -172,13 +159,11 @@ export class TeachersController {
             res.json({
                 data: null,
                 message: 'Maestro eliminado correctamente',
-                code: HTTP_CODES.OK
             });
         } catch (error) {
             res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).json({
                 data: null,
                 message: 'Ha ocurrido un error mientras se realizaba esta operacion.',
-                code: HTTP_CODES.INTERNAL_SERVER_ERROR
             });
         }
     }
