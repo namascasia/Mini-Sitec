@@ -1,4 +1,8 @@
 <script setup>
+import Form from '../../components/Form/Form.vue';
+import { ref } from 'vue';
+
+const formRef = ref(null);
 
 const headerTable = ['Clave materia', 'Nombre', 'Creditos', 'Acciones'];
 
@@ -13,7 +17,7 @@ let numMaterias = 0;
                 <h2>MATERIAS</h2>
             </ariticle>
             <ariticle class="infoDer">
-                <button>
+                <button @click="formRef.toggleForm()">
                     Agregar materia
                     <figure>
                         <img src="/img/crearuser.png" alt="Logo crear usuario">
@@ -50,6 +54,8 @@ let numMaterias = 0;
             <img src="/img/userBlue.png" alt="user">
             <label> Existen {{ numMaterias }} materias</label>
         </article>
+
+        <Form ref="formRef" :labels="headerTable.filter(header => header !== 'Acciones')" />
     </section>    
 </template>
 

@@ -31,4 +31,4 @@ const router = useRouter();
     </header>
 </template>
 
-<style scoped src="./MenuCSS.css"></style>
+<style scoped src="./Menu.css"></style>
