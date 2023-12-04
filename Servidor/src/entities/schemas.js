@@ -5,5 +5,5 @@ import { subjects } from './subjects.schema.js';
 export const schemas = {
     students,
     teachers,
-
+    subjects
 };

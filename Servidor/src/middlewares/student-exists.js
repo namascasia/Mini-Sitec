@@ -22,6 +22,5 @@ export const studentExists = async (req, res, next) => {
     return res.status(HTTP_CODES.BAD_REQUEST).json({
         data: null,
         message: `El alumno con el id ${studentId} no existe`,
-        code: HTTP_CODES.BAD_REQUEST
     });
 }
