@@ -22,23 +22,23 @@ let numAlumnos = 0;
             </ariticle>
         </header>
         <article class="containerTable">
-            <table class="table">
-                <thead>
-                    <th v-for=" header in headerTable">{{ header }}</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>100</th>
-                        <th>America Citlaly Flores Mascareño</th>
-                        <th>Sistemas</th>
-                        <th>Vigente</th>
-                        <th>
-                            <img class="edit" src="/img/note.png" alt="editar"> | 
-                            <img class="delete" src="/img/delete.png" alt="borrar">
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="headerTable">
+                <div class="row">
+                    <div v-for="header in headerTable">{{ header }}</div>
+                </div>
+            </div>
+            <div class="body">
+                <div class="row">
+                    <div>100</div>
+                    <div>America Citlaly Flores Mascareño</div>
+                    <div>Sistemas</div>
+                    <div>Vigente</div>
+                    <div>
+                        <img class="edit" src="/img/note.png" alt="editar">  
+                        <img class="delete" src="/img/delete.png" alt="borrar">
+                    </div>
+                </div>
+            </div>
         </article>
         <article class="containerPrevNext">
             <article class="containerButtonsText">

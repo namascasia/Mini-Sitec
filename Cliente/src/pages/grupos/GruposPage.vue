@@ -23,29 +23,29 @@ let numGrupos = 0;
             </ariticle>
         </header>
         <article class="containerTable">
-            <table class="table">
-                <thead>
-                    <th v-for=" header in headerTable">{{ header }}</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>100</th>
-                        <th>Programación web</th>
-                        <th>Martin Nevares Montes</th>
-                        <th>40</th>
-                        <th>23</th>
-                        <th>12:00-13:00</th>
-                        <th>12:00-13:00</th>
-                        <th>12:00-13:00</th>
-                        <th>12:00-13:00</th>
-                        <th>12:00-13:00</th>
-                        <th>
-                            <img class="edit" src="/img/note.png" alt="editar"> | 
-                            <img class="delete" src="/img/delete.png" alt="borrar">
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="headerTable">
+                <div class="row">
+                    <div v-for="header in headerTable">{{ header }}</div>
+                </div>
+            </div>
+            <div class="body">
+                <div class="row">
+                    <div>100</div>
+                    <div>Programacion web</div>
+                    <div>Martin Nevares</div>
+                    <div>40</div>
+                    <div>34</div>
+                    <div>12:00-13:00</div>
+                    <div>12:00-13:00</div>
+                    <div>12:00-13:00</div>
+                    <div>12:00-13:00</div>
+                    <div>12:00-13:00</div>
+                    <div>
+                        <img class="edit" src="/img/note.png" alt="editar"> 
+                        <img class="delete" src="/img/delete.png" alt="borrar">
+                    </div>
+                </div>
+            </div>
         </article>
         <article class="containerPrevNext">
             <article class="containerButtonsText">
