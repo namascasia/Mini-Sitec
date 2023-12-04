@@ -13,10 +13,6 @@ let numAlumnos = 0;
                 <h2>ALUMNOS</h2>
             </ariticle>
             <ariticle class="infoDer">
-                <!-- <span>Agregar alumno</span>
-                <button>
-                    <img src="/img/crearuser.png" alt="Logo crear usuario">
-                </button> -->
                 <button>
                     Agregar alumno
                     <figure>
@@ -33,7 +29,7 @@ let numAlumnos = 0;
                 <tbody>
                     <tr>
                         <th>100</th>
-                        <th>America</th>
+                        <th>America Citlaly Flores Mascareño</th>
                         <th>Sistemas</th>
                         <th>Vigente</th>
                         <th>
