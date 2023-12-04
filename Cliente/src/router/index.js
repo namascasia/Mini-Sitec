@@ -5,7 +5,8 @@ import {
     AlumnosPage,
     GruposPage,
     MateriasPage,
-    MaestrosPage
+    MaestrosPage,
+    CargaMateriasPage
 } from '../pages'
 
 const routes = [
@@ -13,7 +14,8 @@ const routes = [
     { path: '/inicio', name: 'inicio', component: HomePage },
     { path: '/grupos', name: 'grupos', component: GruposPage },
     { path: '/materias', name: 'materias', component: MateriasPage },
-    { path: '/maestros', name: 'maestros', component: MaestrosPage }
+    { path: '/maestros', name: 'maestros', component: MaestrosPage },
+    { path: '/cargaMaterias', name: 'cargaMaterias', component: CargaMateriasPage }
 ];
 
 const PUBLIC_ROUTE = '/';
@@ -23,7 +25,8 @@ const ALL_ROUTES = [
     '/inicio',
     '/grupos',
     '/materias',
-    '/maestros'
+    '/maestros',
+    '/cargaMaterias'
 ];
 
 export const router = createRouter({

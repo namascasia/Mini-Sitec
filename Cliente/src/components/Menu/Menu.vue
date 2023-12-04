@@ -26,6 +26,10 @@ const router = useRouter();
                     <img src="/img/teacher.png" alt="User icon">
                     Maestros
                 </li>
+                <li @click="router.push('/cargaMaterias')" class="list_item">
+                    <img src="/img/subir.png" alt="cargaMateria icon">
+                    Cargar materias
+                </li>
             </ul>
         </nav>
     </header>
