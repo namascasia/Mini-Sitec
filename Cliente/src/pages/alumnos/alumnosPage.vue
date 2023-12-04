@@ -13,10 +13,6 @@ let numAlumnos = 0;
                 <h2>ALUMNOS</h2>
             </ariticle>
             <ariticle class="infoDer">
-                <!-- <span>Agregar alumno</span>
-                <button>
-                    <img src="/img/crearuser.png" alt="Logo crear usuario">
-                </button> -->
                 <button>
                     Agregar alumno
                     <figure>
