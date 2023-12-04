@@ -13,9 +13,15 @@ let numAlumnos = 0;
                 <h2>ALUMNOS</h2>
             </ariticle>
             <ariticle class="infoDer">
-                <span>Agregar alumno</span>
+                <!-- <span>Agregar alumno</span>
                 <button>
                     <img src="/img/crearuser.png" alt="Logo crear usuario">
+                </button> -->
+                <button>
+                    Agregar alumno
+                    <figure>
+                        <img src="/img/crearuser.png" alt="Logo crear usuario">
+                    </figure>
                 </button>
             </ariticle>
         </header>
@@ -31,8 +37,8 @@ let numAlumnos = 0;
                         <th>Sistemas</th>
                         <th>Vigente</th>
                         <th>
-                            <img src="/img/editar.png" alt="editar"> | 
-                            <img src="/img/borrar.png" alt="borrar">
+                            <img class="edit" src="/img/note.png" alt="editar"> | 
+                            <img class="delete" src="/img/delete.png" alt="borrar">
                         </th>
                     </tr>
                 </tbody>

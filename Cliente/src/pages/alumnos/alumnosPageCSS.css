@@ -41,7 +41,36 @@ header{
     font-size: 1.3rem;
     font-weight: 400;
 
+
     & button {
+        background-color: #011126;
+        display: flex;
+        gap: 5px;
+        border: none;
+        border-radius: 5px;
+        align-items: center;
+        color: #f2f2f2;
+        padding-left: 10px;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        & figure {
+            background-color: #1F3B73;
+            border-radius: 10px 5px 5px 10px;
+            padding: 5px;
+        }
+
+        & img {
+            width: 25px;
+            height: 25px;
+            filter: invert(1);
+        }
+
+        &:hover {
+            filter: brightness(110%);
+        }
+    }
+    /* & button {
         background-color: #1F3B73;
         border-radius: 50%;
         padding: 10px;
@@ -58,7 +87,7 @@ header{
         &:hover {
             scale: 1.1;
         }
-    }
+    } */
 
 }
 
@@ -87,11 +116,11 @@ header{
         border-left: 2px solid #1F3B73;
         display: flex;
         justify-content: center;
+        align-items: center;
         gap: 5px;
     }
 
     & img{
-        width: 20px;
         transition: all 0.3s;
         cursor: pointer;
         
@@ -152,4 +181,15 @@ header{
         font-size: 1.3rem;
         color: #787878;
     }
+}
+
+.edit {
+    filter: invert(1);
+    width: 25px;
+    height: 25px;
+}
+
+.delete {
+    width: 20px;
+    height: 20px;
 }
