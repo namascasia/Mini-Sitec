@@ -70,25 +70,6 @@ header{
             filter: brightness(110%);
         }
     }
-    /* & button {
-        background-color: #1F3B73;
-        border-radius: 50%;
-        padding: 10px;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s;
-
-        & img {
-            width: 30px;
-            height: 25px;
-            filter: invert(1);
-        }
-
-        &:hover {
-            scale: 1.1;
-        }
-    } */
-
 }
 
 .containerTable{
@@ -110,9 +91,10 @@ header{
     & th{
         font-weight: normal;
         font-family: Tahoma;
+        max-width: 150px;
     }
 
-    & th:nth-child(5){
+    & th:last-child{
         border-left: 2px solid #1F3B73;
         display: flex;
         justify-content: center;

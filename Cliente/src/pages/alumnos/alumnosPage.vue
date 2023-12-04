@@ -29,7 +29,7 @@ let numAlumnos = 0;
                 <tbody>
                     <tr>
                         <th>100</th>
-                        <th>America</th>
+                        <th>America Citlaly Flores Mascareño</th>
                         <th>Sistemas</th>
                         <th>Vigente</th>
                         <th>
