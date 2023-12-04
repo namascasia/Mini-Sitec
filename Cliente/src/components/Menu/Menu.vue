@@ -7,7 +7,7 @@ const router = useRouter();
 
 <template>
     <header class="header">
-        <h2>Menu</h2>
+        <h3>Menu</h3>
         <nav class="nav">
             <ul>
                 <li @click="router.push('/grupos')" class="list_item">
