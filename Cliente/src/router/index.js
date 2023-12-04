@@ -33,10 +33,6 @@ export const router = createRouter({
 
 router.beforeEach((to, from) => {
 
-    if (to.fullPath === PUBLIC_ROUTE) {
-        return { path: '/inicio' };
-    }
-
     if (!ALL_ROUTES.includes(to.fullPath)) {
         return { path: '/inicio' };
     }
