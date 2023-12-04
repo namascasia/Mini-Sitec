@@ -26,22 +26,22 @@ let numMaterias = 0;
             </ariticle>
         </header>
         <article class="containerTable">
-            <table class="table">
-                <thead>
-                    <th v-for=" header in headerTable">{{ header }}</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>100</th>
-                        <th>Poo</th>
-                        <th>6</th>
-                        <th>
-                            <img class="edit" src="/img/note.png" alt="editar"> | 
-                            <img class="delete" src="/img/delete.png" alt="borrar">
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="headerTable">
+                <div class="row">
+                    <div v-for="header in headerTable">{{ header }}</div>
+                </div>
+            </div>
+            <div class="body">
+                <div class="row">
+                    <div>100</div>
+                    <div>Programación web</div>
+                    <div>6</div>
+                    <div>
+                        <img class="edit" src="/img/note.png" alt="editar">  
+                        <img class="delete" src="/img/delete.png" alt="borrar">
+                    </div>
+                </div>
+            </div>
         </article>
         <article class="containerPrevNext">
             <article class="containerButtonsText">
