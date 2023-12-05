@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { POSITION, useToast } from 'vue-toastification';
 import Form from '../../components/Form/Form.vue';
+import { api } from '../../components/api';
 
 const formRef = ref(null);
 const students = ref([]);
@@ -10,19 +11,29 @@ const toast = useToast();
 const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
 
 const getStudents = async() => {
-    const resp = await fetch('http://localhost:3000/api/students/get');
-    
-    if (resp.status >= 400) {
-        toast.error('Algo salio mal', {
-            timeout: 2000,
-        });
+    const { data, status } = await api.get('/students/get');
+
+    if (status >= 400) {
+        toast.error(data.message, { position: POSITION.BOTTOM_RIGHT });
         return;
     }
-    
-    const { data, message } = await resp.json();
 
-    students.value = data;
-    toast.success(message, { position: POSITION.BOTTOM_RIGHT, timeout: 2000 });
+    students.value = data.data;
+    toast.success(data.message, { position: POSITION.BOTTOM_RIGHT, timeout: 2000 });
+}
+
+const deleteStudent = async(studentId) => {
+    const { data, status } = await api.delete(`/students/delete/${ studentId }`);
+    
+    if (status >= 400) {
+        toast.error(data.message, { position: POSITION.BOTTOM_RIGHT });
+        return;
+    }
+
+    const index = students.value.findIndex(student => student.nControl === studentId);
+    students.value[index].status = 'B';
+
+    toast.info(data.message, { position: POSITION.BOTTOM_RIGHT, timeout: 2000 });
 }
 
 getStudents()
@@ -59,7 +70,7 @@ getStudents()
                     <p>{{ student.status }}</p>
                     <div>
                         <img class="edit" src="/img/note.png" alt="editar">  
-                        <img class="delete" src="/img/delete.png" alt="borrar">
+                        <img @click="deleteStudent(student.nControl)" class="delete" src="/img/delete.png" alt="borrar">
                     </div>
                 </li>             
             </ul>
