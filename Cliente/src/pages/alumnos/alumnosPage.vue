@@ -51,28 +51,18 @@ getStudents()
                     <div v-for="header in headerTable">{{ header }}</div>
                 </div>
             </div>
-            <div class="body">
-                <div class="row" v-for="student in students" :key="student.nControl">
-                    <div>{{ student.nControl }}</div>
-                    <div>{{ student.name }}</div>
-                    <div>{{ student.career }}</div>
-                    <div>{{ student.status }}</div>
+            <ul class="body">
+                <li class="row" v-for="student in students" :key="student.nControl">
+                    <p>{{ student.nControl }}</p>
+                    <p>{{ student.name }}</p>
+                    <p>{{ student.career }}</p>
+                    <p>{{ student.status }}</p>
                     <div>
                         <img class="edit" src="/img/note.png" alt="editar">  
                         <img class="delete" src="/img/delete.png" alt="borrar">
                     </div>
-                </div>
-                <!-- <div class="row">
-                    <div>100</div>
-                    <div>America Citlaly Flores Mascareño</div>
-                    <div>Sistemas</div>
-                    <div>Vigente</div>
-                    <div>
-                        <img class="edit" src="/img/note.png" alt="editar">  
-                        <img class="delete" src="/img/delete.png" alt="borrar">
-                    </div>
-                </div> -->
-            </div>
+                </li>             
+            </ul>
         </article>
         <article class="containerPrevNext">
             <article class="containerButtonsText">
@@ -86,7 +76,7 @@ getStudents()
             <label> Existen {{ 0 }} alumnos</label>
         </article>
 
-        <Form ref="formRef" :labels="headerTable.filter(headers => headers !== 'Acciones')" />
+        <Form ref="formRef" endpoint="students" :labels="headerTable.filter(headers => headers !== 'Acciones')" />
     </section>    
 </template>
 
