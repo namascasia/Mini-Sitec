@@ -1,4 +1,8 @@
 <script setup>
+import Form from '../../components/Form/Form.vue';
+import { ref } from 'vue';
+
+const formRef = ref(null);
 
 const headerTable = ['Materia', 'Grupo', 'Maestro', 'Limite alumnos', 'Inscritos', 'Horario Lunes',
 'Horario Martes','Horario Miercoles','Horario Jueves','Horario Viernes', 'Acciones'];
@@ -14,7 +18,7 @@ let numGrupos = 0;
                 <h2>GRUPOS</h2>
             </ariticle>
             <ariticle class="infoDer">
-                <button>
+                <button @click="formRef.toggleForm()">
                     Agregar grupo
                     <figure>
                         <img src="/img/crearuser.png" alt="Logo crear usuario">
@@ -58,6 +62,8 @@ let numGrupos = 0;
             <img src="/img/userBlue.png" alt="user">
             <label> Existen {{ numGrupos }} grupos</label>
         </article>
+
+        <Form ref="formRef" :labels="headerTable.filter(header => header !== 'Acciones')" />
     </section>    
 </template>
 
