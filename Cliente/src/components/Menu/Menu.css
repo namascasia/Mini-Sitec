@@ -4,6 +4,7 @@
     width: 170px;
     height: 100vh;
     color: #f2f2f2;
+    /* padding: 6px 0px 6px 6px; */
     padding: 6px;
 
     & h3 {
@@ -16,7 +17,6 @@
 }
 
 .nav {
-
     & ul {
         display: flex;
         flex-direction: column;
@@ -53,4 +53,9 @@
     &:hover {
         filter: brightness(110%);
     }
+/* 
+    &:active{
+        background-color: #f2f2f2;
+        color: var(--darker-blue);
+    } */
 }
