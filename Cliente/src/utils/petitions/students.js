@@ -33,7 +33,6 @@ export const getStudents = async () => {
     }
 
     store.students = [...data.data];
-    notify(data.message);
 }
 
 export const deleteStudent = async (studentId) => {
