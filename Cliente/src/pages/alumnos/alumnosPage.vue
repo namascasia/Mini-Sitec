@@ -59,7 +59,7 @@ getStudents();
         </article>  
         <article class="containerNumEstudiantes">
             <img src="/img/userBlue.png" alt="user">
-            <label> Existen {{ 0 }} alumnos</label>
+            <label> Existen {{ store.students.length }} alumnos</label>
         </article>
 
         <Form ref="formRef" endpoint="students" :labels="headerTable.filter(headers => headers !== 'Acciones')" />

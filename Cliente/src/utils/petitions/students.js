@@ -1,7 +1,6 @@
-import { MESSAGES_TYPES, notify } from "../helpers/notify";
+import { MESSAGES_TYPES, notify, confirm } from "../helpers";
 import { useStore } from "../../store/store";
 import { api } from '../../api'
-import Swal from "sweetalert2";
 
 const store = useStore();
 
@@ -14,8 +13,8 @@ export const createStudent = async (student = []) => {
         status: student[3].value
     }
     try {
-        const { data, message } = await api.post('/students/create', newStudent);
-        notify(message);
+        const { data } = await api.post('/students/create', newStudent);
+        notify(data.message);
         store.students.push(data.data);
     } catch (error) {
         const { response } = error;
@@ -37,18 +36,9 @@ export const getStudents = async () => {
 
 export const deleteStudent = async (studentId) => {
 
-    const { isConfirmed } = await Swal.fire({
-        title: 'Borrado',
-        text: '¿Estas seguro de querer borrar a este estudiante?',
-        icon: 'warning',
-        showConfirmButton: true,
-        confirmButtonText: 'Si',
-        showCancelButton: true,
-        cancelButtonText: 'No'
-    });
+    const isOk = await confirm();
 
-
-    if (!isConfirmed) return;
+    if (!isOk) return;
 
     const { data, status } = await api.delete(`/students/delete/${studentId}`);
 
