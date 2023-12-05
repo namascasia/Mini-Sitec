@@ -1,12 +1,32 @@
 <script setup>
-import Form from '../../components/Form/Form.vue';
 import { ref } from 'vue';
+import { POSITION, useToast } from 'vue-toastification';
+import Form from '../../components/Form/Form.vue';
 
 const formRef = ref(null);
+const students = ref([]);
+const toast = useToast();
 
 const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
 
-let numAlumnos = 0;
+const getStudents = async() => {
+    const resp = await fetch('http://localhost:3000/api/students/get');
+    
+    if (resp.status >= 400) {
+        toast.error('Algo salio mal', {
+            timeout: 2000,
+        });
+        return;
+    }
+    
+    const { data, message } = await resp.json();
+
+    students.value = data;
+    toast.success(message, { position: POSITION.BOTTOM_RIGHT, timeout: 2000 });
+}
+
+getStudents()
+
 </script>
 
 <template>
@@ -32,7 +52,17 @@ let numAlumnos = 0;
                 </div>
             </div>
             <div class="body">
-                <div class="row">
+                <div class="row" v-for="student in students" :key="student.nControl">
+                    <div>{{ student.nControl }}</div>
+                    <div>{{ student.name }}</div>
+                    <div>{{ student.career }}</div>
+                    <div>{{ student.status }}</div>
+                    <div>
+                        <img class="edit" src="/img/note.png" alt="editar">  
+                        <img class="delete" src="/img/delete.png" alt="borrar">
+                    </div>
+                </div>
+                <!-- <div class="row">
                     <div>100</div>
                     <div>America Citlaly Flores Mascareño</div>
                     <div>Sistemas</div>
@@ -41,7 +71,7 @@ let numAlumnos = 0;
                         <img class="edit" src="/img/note.png" alt="editar">  
                         <img class="delete" src="/img/delete.png" alt="borrar">
                     </div>
-                </div>
+                </div> -->
             </div>
         </article>
         <article class="containerPrevNext">
@@ -53,7 +83,7 @@ let numAlumnos = 0;
         </article>  
         <article class="containerNumEstudiantes">
             <img src="/img/userBlue.png" alt="user">
-            <label> Existen {{ numAlumnos }} alumnos</label>
+            <label> Existen {{ 0 }} alumnos</label>
         </article>
 
         <Form ref="formRef" :labels="headerTable.filter(headers => headers !== 'Acciones')" />

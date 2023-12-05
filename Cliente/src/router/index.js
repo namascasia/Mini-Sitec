@@ -18,8 +18,6 @@ const routes = [
     { path: '/cargaMaterias', name: 'cargaMaterias', component: CargaMateriasPage }
 ];
 
-const PUBLIC_ROUTE = '/';
-
 const ALL_ROUTES = [
     '/alumnos',
     '/inicio',

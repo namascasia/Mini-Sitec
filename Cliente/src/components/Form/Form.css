@@ -20,26 +20,27 @@
         border: 2px solid #1F3B73;
         padding: 10px;
 
-        & button{
-            width: 20px;
-            height: 20px;
-            border: none;
-            background-color: transparent;
-            
+        & button {
+            cursor: pointer;
             &:hover{
                 filter: brightness(110%);
             }
 
+        }
+
+        & .buttonClose {
+            width: 20px;
+            height: 20px;
+            border: none;
+            background-color: transparent;
+            align-self: flex-end;
+            
             & img{
                 width: 20px;
             }
         }
-    }    
-}
 
-.containerButton{
-    display: flex;
-    justify-content: flex-end;
+    }    
 }
 
 .containerInput{
@@ -84,4 +85,6 @@
     border-radius: 5px;
     background-color: #1F3B73;
     color: white;
+    align-self: center;
+    border: none;
 }
