@@ -32,10 +32,19 @@ defineExpose({
 <template>
     <section v-if="isShowingForm" class="modal">
         <form>
-            <button @click="toggleForm">X</button>
-            <div v-for="label in labels">
-                <label>{{ label }}</label>
-                <input type="text" :placeholder="label">
+            <div class="containerButton">
+                <button @click="toggleForm">
+                    <img src="/img/boton-x.png" alt="icono X">
+                </button>
+            </div>
+            <div class="containerInput">
+                <div class="info" v-for="label in labels">
+                    <label>{{ label }}</label>
+                    <input type="text" :placeholder="label">
+                </div>
+            </div>
+            <div class="containerButtonSave">
+                <button id="buttonSave">Guardar</button>
             </div>
         </form>
     </section>    
