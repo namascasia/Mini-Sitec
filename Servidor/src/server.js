@@ -10,7 +10,8 @@ export class Server {
         this.paths = {
             students: '/api/students',
             teachers: '/api/teachers',
-            subjects: '/api/subjects'
+            subjects: '/api/subjects',
+            groups: '/api/groups'
         };
         this.port = 3000;
 
@@ -25,6 +26,7 @@ export class Server {
         this.app.use(this.paths.students, routers.studentsRouter);
         this.app.use(this.paths.teachers, routers.teachersRouter);
         this.app.use(this.paths.subjects, routers.subjectsRouter);
+        this.app.use(this.paths.groups, routers.groupsRouter);
     }
 
     middlewares() {
