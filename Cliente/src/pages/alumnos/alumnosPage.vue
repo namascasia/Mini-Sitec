@@ -1,42 +1,14 @@
 <script setup>
 import { ref } from 'vue';
-import { POSITION, useToast } from 'vue-toastification';
+import { useStore } from "../../store/store";
 import Form from '../../components/Form/Form.vue';
-import { api } from '../../components/api';
+import { getStudents, deleteStudent } from '../../utils/petitions/students';
 
 const formRef = ref(null);
-const students = ref([]);
-const toast = useToast();
-
+const store = useStore();
 const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
 
-const getStudents = async() => {
-    const { data, status } = await api.get('/students/get');
-
-    if (status >= 400) {
-        toast.error(data.message, { position: POSITION.BOTTOM_RIGHT });
-        return;
-    }
-
-    students.value = data.data;
-    toast.success(data.message, { position: POSITION.BOTTOM_RIGHT, timeout: 2000 });
-}
-
-const deleteStudent = async(studentId) => {
-    const { data, status } = await api.delete(`/students/delete/${ studentId }`);
-    
-    if (status >= 400) {
-        toast.error(data.message, { position: POSITION.BOTTOM_RIGHT });
-        return;
-    }
-
-    const index = students.value.findIndex(student => student.nControl === studentId);
-    students.value[index].status = 'B';
-
-    toast.info(data.message, { position: POSITION.BOTTOM_RIGHT, timeout: 2000 });
-}
-
-getStudents()
+getStudents();
 
 </script>
 
@@ -63,16 +35,19 @@ getStudents()
                 </div>
             </div>
             <ul class="body">
-                <li class="row" v-for="student in students" :key="student.nControl">
+                <li class="row" v-for="student in store.students" :key="student.nControl">
                     <p>{{ student.nControl }}</p>
                     <p>{{ student.name }}</p>
                     <p>{{ student.career }}</p>
                     <p>{{ student.status }}</p>
                     <div>
                         <img class="edit" src="/img/note.png" alt="editar">  
-                        <img @click="deleteStudent(student.nControl)" class="delete" src="/img/delete.png" alt="borrar">
+                        <button class="delete_button" :disabled="student.status === 'B'">
+                            <img @click="deleteStudent(student.nControl)" class="delete" :class="student.status === 'B' ? 'disabled' : ''" src="/img/delete.png" alt="borrar">
+                        </button>
                     </div>
-                </li>             
+                </li>
+                <p v-if="store.students.length === 0">No hay estudiantes por mostrar</p>             
             </ul>
         </article>
         <article class="containerPrevNext">
