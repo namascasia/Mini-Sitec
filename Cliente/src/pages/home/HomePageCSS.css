@@ -1,0 +1,44 @@
+*{
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+}
+
+.container{
+    width: 90%;
+    height: 97vh;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    margin: 10px;
+    background-color: white;
+    border-radius: 20px;
+    
+    & img{
+        width: 35%;
+        height: 100%;
+    }
+}
+
+.containerBienvenida{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+    & span{
+        font-size: 4rem;
+        font-family: Tahoma;
+        color: #193559;
+    }
+    
+    & img{
+        width: 400px;
+        height: 400px;
+        filter: brightness(110%);
+
+        &:hover{
+            filter: brightness(120%);
+        }
+    }
+}
