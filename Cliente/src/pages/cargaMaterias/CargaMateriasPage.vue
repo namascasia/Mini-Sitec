@@ -27,6 +27,7 @@
         </section>
         <section class="containerPreview">
             <article class="datosAlumno">
+                <span> Preview de carga</span>
                 <label>N. control</label>
                 <input type="text" placeholder="N. control">
                 <button>Cargar</button>
