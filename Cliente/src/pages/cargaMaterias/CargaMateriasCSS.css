@@ -4,16 +4,213 @@
     box-sizing: border-box;
 }
 
-
 .container{
     width: 90%;
     height: 97vh;
-    /* margin: 10px 10px 10px 0px; */
-    margin: 10px 10px 10px 10px;
+    display: flex;
+    margin: 10px;
     background-color: white;
     border-radius: 20px;
+}
+
+.infoIzq{
+    padding: 15px 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.containerGruposTitle{
+    width: 30%;
+
+    & .containerGrupos{
+        width: 85%;
+        height: 85%;
+        border-radius: 5px;
+        padding: 15px;
+        margin-left: 20px;
+        background-color: #f2f2f2;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        & .title{
+            text-align: center;
+            color: #1F3B73;
+            font-weight: 600;
+        }
+
+        & .tarjetaGrupos{
+            height: 120px;
+            border-radius: 5px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            background-color: white;
+            border: 1px solid #787878;
+    
+            &:hover{
+                cursor: pointer;
+                background-color: #e6e6e6;
+            }
+    
+            & label:first-child{
+                font-weight: bold;
+                text-align: center;
+            }
+    
+            & label:hover{
+                cursor: pointer;
+            }
+    
+        }
+    }
+}
+
+.datosAlumno{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+
+    & label{
+        font-size: 1rem;
+        font-family: Tahoma;
+        margin-left: 50px;
+    }
+
+    & input{
+        width: 200px;
+        height: 30px;
+        padding: 5px;
+        background-color: #f6f6f6;
+        border-radius: 5px;
+        border: none;
+        border: 1px solid #e6e6e6;
+    }
+
+    & button{
+        width: 80px;
+        height: 30px;
+        padding: 5px;
+        border-radius: 5px;
+        border: none;
+        background-color: #1F3B73;
+        color: #f2f2f2;
+        margin-left: 10px;
+        font-family: tahoma;
+
+        &:hover{
+            filter: brightness(110%);
+        }
+
+    }
+}
+
+.containerPreview{
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
+
+    & .previewHorario{
+        width: 90%;
+        height: 85%;
+        border-radius: 5px;
+        padding: 15px;
+        background-color: #f6f6f6;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        & ul{
+            width: 98%;
+            height: 85px;
+            border-radius: 5px;
+            padding: 8px;
+            background-color: white;
+            display: flex;
+            gap: 10px;
+            cursor: pointer;
+
+            &:hover{
+                border: 2px solid #1F3B73;
+                cursor: pointer;
+            }
+            
+            & li:nth-child(2){
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                font-size: 1rem;
+            }
+
+            & li{
+                list-style: none;
+                display: flex;
+                
+                & figure{
+                    width: 30px;
+                    height: 82px;
+                    margin-top: -8px;
+                    margin-left: 10px;
+                    background-color: #1F3B73;
+                }
+                
+                & label{
+                    cursor: pointer;
+                }
+
+                & label:nth-child(1){
+                    font-weight: bold;
+                    color: #1F3B73;
+                }
+
+                & img{
+                    width: 20px;
+                    height: 20px;
+                    margin-left: 150px;
+                    margin-top: 25px;
+                    cursor: pointer;
+
+                    &:hover{
+                        scale: 1.2;
+                    }
+                }
+            }
+
+        }    
+    }
 }
+
+.diasClase{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-left: 60px;
+}
+
+#row{
+    width: auto;
+    height: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    & li{
+        font-size: 0.8rem;
+        width: 55px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    &:hover{
+        border-color: white;
+        transform: none;
+    }
+
+}
+
