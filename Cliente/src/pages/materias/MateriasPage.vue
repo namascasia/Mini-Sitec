@@ -32,10 +32,10 @@ const headerTable = ['Clave materia', 'Nombre', 'Creditos', 'Acciones'];
                     <p>{{ subject.id }}</p>
                     <p>{{ subject.name }}</p>
                     <p>{{ subject.credits }}</p>
-                    <p>
+                    <div>
                         <img class="edit" src="/img/note.png" alt="editar">  
                         <img class="delete" src="/img/delete.png" alt="borrar">
-                    </p>
+                    </div>
                 </li>
             </ul>
         </article>

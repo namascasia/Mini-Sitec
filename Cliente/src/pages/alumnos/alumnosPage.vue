@@ -7,7 +7,22 @@ import ModalForm from '../../components/ModalForm/ModalForm.vue';
 import FormAlumno from '../../components/Forms/alumnos/FormAlumno.vue';
 
 const modalRef = ref(null);
+const page = ref(0);
 const store = useStore();
+
+const nextPage = () => {
+    if (page.value == numberOfPages.value - 1) return;
+    page.value++;
+}
+
+const previousPage = () => {
+    if (page.value === 0) return;
+    page.value--;
+}
+
+const numberOfPages = computed(() => {
+    return Math.round(store.students.length / 4);
+});
 
 const activeStudents = computed(() => {
     return store.students.filter(student => student.status !== 'B' ).length;
@@ -34,7 +49,7 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
                 </div>
             </div>
             <ul class="body">
-                <li class="row" v-for="student in store.students" :key="student.nControl">
+                <li class="row" v-for="student in store.students.slice(page * 4, (page * 4) + 4)" :key="student.nControl">
                     <p>{{ student.nControl }}</p>
                     <p>{{ student.name }}</p>
                     <p>{{ student.career }}</p>
@@ -51,9 +66,9 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
         </article>
         <article class="containerPrevNext">
             <article class="containerButtonsText">
-                <button>⟸ Prev</button>
-                <label class="counterPage">1</label>
-                <button>Next ⟹</button>
+                <button @click="previousPage()">⟸ Prev</button>
+                <label class="counterPage">{{ page + 1 }}</label>
+                <button @click="nextPage()">Next ⟹</button>
             </article>
         </article>  
         <article class="containerNumEstudiantes">

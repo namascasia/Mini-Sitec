@@ -14,10 +14,8 @@ export const createStudent = async (student = {}) => {
         return { ok: true };
     }
 
-    if (status >= HttpStatusCode.BadRequest) {
-        notify(data.message, MESSAGES_TYPES.ERROR);
-        return { ok: false };
-    }
+    notify(data.message, MESSAGES_TYPES.ERROR);
+    return { ok: false };
 
 
 }

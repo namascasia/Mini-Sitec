@@ -1,9 +1,11 @@
 <script setup>
-import Button from '../../components/Button/Button.vue';
 import { ref } from 'vue';
+import Button from '../../components/Button/Button.vue';
 import Modalform from '../../components/ModalForm/ModalForm.vue';
 import FormMaestro from '../../components/Forms/maestros/FormMaestro.vue';
+import { useStore } from '../../store/store';
 
+const store = useStore();
 const modalRef = ref(null);
 
 const headerTable = ['Clave maestro', 'Nombre', 'Departamento', 'Estatus', 'Acciones'];
@@ -27,18 +29,18 @@ let numMaestros = 0;
                     <div v-for="header in headerTable">{{ header }}</div>
                 </div>
             </div>
-            <div class="body">
-                <div class="row">
-                    <div>100</div>
-                    <div>America Citlaly Flores Mascareño</div>
-                    <div>Sistemas</div>
-                    <div>Vigente</div>
+            <ul class="body">
+                <li class="row" v-for="teacher in store.teachers" :key="teacher.id">
+                    <p>{{ teacher.id }}</p>
+                    <p>{{ teacher.name }}</p>
+                    <p>{{ teacher.department }}</p>
+                    <p>{{ teacher.status }}</p>
                     <div>
                         <img class="edit" src="/img/note.png" alt="editar">  
                         <img class="delete" src="/img/delete.png" alt="borrar">
                     </div>
-                </div>
-            </div>
+                </li>
+            </ul>
         </article>
         <article class="containerPrevNext">
             <article class="containerButtonsText">
@@ -53,7 +55,7 @@ let numMaestros = 0;
         </article>
 
         <Modalform ref="modalRef">
-            <FormMaestro />
+            <FormMaestro :close-modal="modalRef.closeModal" />
         </ModalForm>
     </section>    
 </template>
