@@ -5,6 +5,12 @@ export const usePagination = (term) => {
     const page = ref(0);
     const store = useStore();
 
+    const numberOfPages = computed(() => {
+        return Math.ceil(store[term].length / 4, -1);
+    });
+
+    console.log(numberOfPages.value);
+
     const nextPage = () => {
         if (page.value == numberOfPages.value - 1) return;
         page.value++;
@@ -15,9 +21,14 @@ export const usePagination = (term) => {
         page.value--;
     }
 
-    const numberOfPages = computed(() => {
-        return Math.round(store[term].length / 4);
-    });
+    const offset = computed(() => page.value * 4);
+    const limit = computed(() => offset.value + 4);
 
-    return { page, nextPage, previousPage };
+    return {
+        page,
+        offset,
+        limit,
+        nextPage,
+        previousPage
+    };
 } 

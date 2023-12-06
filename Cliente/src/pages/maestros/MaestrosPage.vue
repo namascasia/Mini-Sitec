@@ -4,12 +4,13 @@ import Button from '../../components/Button/Button.vue';
 import Modalform from '../../components/ModalForm/ModalForm.vue';
 import FormMaestro from '../../components/Forms/maestros/FormMaestro.vue';
 import { useStore } from '../../store/store';
+import { usePagination } from '../../composables/usePagination';
 
-const store = useStore();
 const modalRef = ref(null);
+const { page, offset, limit, nextPage, previousPage } = usePagination('teachers');
+const store = useStore();
 
 const headerTable = ['Clave maestro', 'Nombre', 'Departamento', 'Estatus', 'Acciones'];
-let numMaestros = 0;
 </script>
 
 <template>
@@ -30,7 +31,7 @@ let numMaestros = 0;
                 </div>
             </div>
             <ul class="body">
-                <li class="row" v-for="teacher in store.teachers" :key="teacher.id">
+                <li class="row" v-for="teacher in store.teachers.slice(offset, limit)" :key="teacher.id">
                     <p>{{ teacher.id }}</p>
                     <p>{{ teacher.name }}</p>
                     <p>{{ teacher.department }}</p>
@@ -44,16 +45,15 @@ let numMaestros = 0;
         </article>
         <article class="containerPrevNext">
             <article class="containerButtonsText">
-                <button>⟸ Prev</button>
-                <label class="counterPage">1</label>
-                <button>Next ⟹</button>
+                <button @click="previousPage()">⟸ Prev</button>
+                <label class="counterPage">{{ page + 1 }}</label>
+                <button @click="nextPage()">Next ⟹</button>
             </article>
         </article>  
         <article class="containerNumEstudiantes">
             <img src="/img/userBlue.png" alt="user">
-            <label> Existen {{ numMaestros }} Maestros</label>
+            <label> Existen {{ store.teachers.length }} Maestros</label>
         </article>
-
         <Modalform ref="modalRef">
             <FormMaestro :close-modal="modalRef.closeModal" />
         </ModalForm>

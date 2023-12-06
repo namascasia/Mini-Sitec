@@ -9,7 +9,7 @@ import FormAlumno from '../../components/Forms/alumnos/FormAlumno.vue';
 
 const modalRef = ref(null);
 const store = useStore();
-const { page, nextPage, previousPage } = usePagination('students');
+const { page, offset, limit, nextPage, previousPage } = usePagination('students');
 
 const activeStudents = computed(() => {
     return store.students.filter(student => student.status !== 'B' ).length;
@@ -36,7 +36,7 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
                 </div>
             </div>
             <ul class="body">
-                <li class="row" v-for="student in store.students.slice(page * 4, (page * 4) + 4)" :key="student.nControl">
+                <li class="row" v-for="student in store.students.slice(offset, limit)" :key="student.nControl">
                     <p>{{ student.nControl }}</p>
                     <p>{{ student.name }}</p>
                     <p>{{ student.career }}</p>
