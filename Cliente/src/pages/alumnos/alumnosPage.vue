@@ -2,27 +2,14 @@
 import { ref, computed } from 'vue';
 import { deleteStudent } from '../../utils/petitions/students';
 import { useStore } from "../../store/store";
+import { usePagination } from '../../composables/usePagination';
 import Button from '../../components/Button/Button.vue';
 import ModalForm from '../../components/ModalForm/ModalForm.vue';
 import FormAlumno from '../../components/Forms/alumnos/FormAlumno.vue';
 
 const modalRef = ref(null);
-const page = ref(0);
 const store = useStore();
-
-const nextPage = () => {
-    if (page.value == numberOfPages.value - 1) return;
-    page.value++;
-}
-
-const previousPage = () => {
-    if (page.value === 0) return;
-    page.value--;
-}
-
-const numberOfPages = computed(() => {
-    return Math.round(store.students.length / 4);
-});
+const { page, nextPage, previousPage } = usePagination('students');
 
 const activeStudents = computed(() => {
     return store.students.filter(student => student.status !== 'B' ).length;

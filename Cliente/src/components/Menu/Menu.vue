@@ -11,6 +11,9 @@ const route = useRoute();
         <h3>Menu</h3>
         <nav class="nav">
             <ul>
+                <li @click="router.push('/inicio')" class="list_item" :class="route.path === '/inicio' ? 'active': ''">
+                    Inicio
+                </li>
                 <li @click="router.push('/grupos')" class="list_item" :class="route.path === '/grupos' ? 'active' : ''">
                     <img src="/img/user-groups.png" alt="User icon">
                     Grupos

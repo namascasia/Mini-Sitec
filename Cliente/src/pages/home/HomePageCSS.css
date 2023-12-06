@@ -36,6 +36,7 @@
         width: 400px;
         height: 400px;
         filter: brightness(110%);
+        transition: all 0.3s;
 
         &:hover{
             filter: brightness(120%);
