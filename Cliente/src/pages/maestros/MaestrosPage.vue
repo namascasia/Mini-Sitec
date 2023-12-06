@@ -5,6 +5,8 @@ import Modalform from '../../components/ModalForm/ModalForm.vue';
 import FormMaestro from '../../components/Forms/maestros/FormMaestro.vue';
 import { useStore } from '../../store/store';
 import { usePagination } from '../../composables/usePagination';
+import { STATUS } from '../../utils/constants/status.contants';
+import { deleteTeacher } from '../../utils/petitions/teachers';
 
 const modalRef = ref(null);
 const { page, offset, limit, nextPage, previousPage } = usePagination('teachers');
@@ -38,7 +40,9 @@ const headerTable = ['Clave maestro', 'Nombre', 'Departamento', 'Estatus', 'Acci
                     <p>{{ teacher.status }}</p>
                     <div>
                         <img class="edit" src="/img/note.png" alt="editar">  
-                        <img class="delete" src="/img/delete.png" alt="borrar">
+                        <button class="delete_button" :disabled="teacher.status === STATUS.DELETED">
+                            <img @click="deleteTeacher(teacher.id)" class="delete" :class="teacher.status === STATUS.DELETED ? 'disabled' : ''" src="/img/delete.png" alt="borrar">
+                        </button>
                     </div>
                 </li>
             </ul>

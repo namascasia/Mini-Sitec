@@ -6,6 +6,7 @@ import { usePagination } from '../../composables/usePagination';
 import Button from '../../components/Button/Button.vue';
 import ModalForm from '../../components/ModalForm/ModalForm.vue';
 import FormAlumno from '../../components/Forms/alumnos/FormAlumno.vue';
+import { STATUS } from '../../utils/constants/status.contants';
 
 const modalRef = ref(null);
 const store = useStore();
@@ -43,8 +44,8 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
                     <p>{{ student.status }}</p>
                     <div>
                         <img class="edit" src="/img/note.png" alt="editar">  
-                        <button class="delete_button" :disabled="student.status === 'B'">
-                            <img @click="deleteStudent(student.nControl)" class="delete" :class="student.status === 'B' ? 'disabled' : ''" src="/img/delete.png" alt="borrar">
+                        <button class="delete_button" :disabled="student.status === STATUS.DELETED">
+                            <img @click="deleteStudent(student.nControl)" class="delete" :class="student.status === STATUS.DELETED ? 'disabled' : ''" src="/img/delete.png" alt="borrar">
                         </button>
                     </div>
                 </li>

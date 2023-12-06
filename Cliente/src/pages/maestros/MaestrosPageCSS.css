@@ -40,6 +40,8 @@ header{
     gap: 20px;
     font-size: 1.3rem;
     font-weight: 400;
+
+
 }
 
 .containerTable{
@@ -132,6 +134,17 @@ header{
     filter: invert(1);
     width: 25px;
     height: 25px;
+}
+
+.delete_button {
+    background-color: transparent;
+    border: none;
+    display: flex;
+}
+
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 .delete {

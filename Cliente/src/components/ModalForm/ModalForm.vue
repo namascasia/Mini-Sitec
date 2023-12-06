@@ -3,17 +3,6 @@ import { ref } from 'vue';
 
 const isOpen = ref(false);
 
-const onSubmit = (event) => {
-    const form = event.target.action.split('/')[3];
-    switch(form) {
-        case 'alumno': console.log('here');break;
-        case 'grupos': console.log('here');break;
-        case 'maestros': console.log('here');break;
-        case 'materias': console.log('here');break;
-    }
-
-}
-
 const openModal = () => {
     isOpen.value = true;
     console.log('?');
