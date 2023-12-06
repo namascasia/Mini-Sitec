@@ -34,7 +34,7 @@
             </article>  
             <article class="previewHorario">
                 <ul>
-                    <li> <figure/> </li>
+                    <li> <figure /> </li>
                     <li>
                         <label>Programación orientada a objetos</label> 
                         <label>Creditos: 5</label>
@@ -42,13 +42,13 @@
                     </li>
                     <li class="diasClase">
                         <label> Dias de clase</label>
-                        <ul id="row">
+                        <!-- <ul id="row">
                             <li>Lunes</li>
                             <li>Martes</li>
                             <li>Miercoles</li>
                             <li>Jueves</li>
                             <li>Viernes</li>
-                        </ul>
+                        </ul> -->
                     </li>
                     <li>
                         <img src="/img/delete.png" alt="eliminar">

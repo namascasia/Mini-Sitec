@@ -7,8 +7,10 @@ import Button from '../../components/Button/Button.vue';
 import ModalForm from '../../components/ModalForm/ModalForm.vue';
 import FormAlumno from '../../components/Forms/alumnos/FormAlumno.vue';
 import { STATUS } from '../../utils/constants/status.contants';
+import FormEditAlumno from '../../components/Forms/alumnos/FormEditAlumno.vue';
 
 const modalRef = ref(null);
+const studentToEdit = ref(null);
 const store = useStore();
 const { page, offset, limit, nextPage, previousPage } = usePagination('students');
 
@@ -43,7 +45,7 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
                     <p>{{ student.career }}</p>
                     <p>{{ student.status }}</p>
                     <div>
-                        <img class="edit" src="/img/note.png" alt="editar">  
+                        <img @click="studentToEdit = student, modalRef.openModal()" class="edit" src="/img/note.png" alt="editar">  
                         <button class="delete_button" :disabled="student.status === STATUS.DELETED">
                             <img @click="deleteStudent(student.nControl)" class="delete" :class="student.status === STATUS.DELETED ? 'disabled' : ''" src="/img/delete.png" alt="borrar">
                         </button>
@@ -64,7 +66,8 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
             <label> Existen {{ activeStudents }} alumnos</label>
         </article>
         <ModalForm ref="modalRef">
-            <FormAlumno :close-modal="modalRef.closeModal" />
+            <FormAlumno v-if="!studentToEdit" :close-modal="modalRef.closeModal" />
+            <FormEditAlumno v-if="studentToEdit" :student="studentToEdit" :close-modal="modalRef.closeModal" />
         </ModalForm>
     </section>    
 </template>

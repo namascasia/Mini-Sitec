@@ -49,3 +49,20 @@ export const deleteStudent = async (studentId) => {
 
     notify(data.message, MESSAGES_TYPES.INFO);
 }
+
+export const updateStudent = async (student) => {
+
+    console.log(student);
+    const { data, status } = await api.put(`/students/update/${student.nControl}`, student);
+
+    if (status >= HttpStatusCode.BadRequest) {
+        notify(data.message, MESSAGES_TYPES.ERROR);
+        return { ok: false };
+    }
+
+    const studentIndex = store.students.findIndex(s => s.nControl == student.nControl);
+    console.log(store.students[studentIndex]);
+    store.students[studentIndex] = student;
+    notify(data.message);
+    return { ok: true };
+}

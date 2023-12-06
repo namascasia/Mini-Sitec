@@ -49,9 +49,9 @@
             gap: 3px;
             background-color: white;
             border: 1px solid #787878;
+            cursor: pointer;
     
             &:hover{
-                cursor: pointer;
                 background-color: #e6e6e6;
             }
     
@@ -148,9 +148,10 @@
             display: flex;
             gap: 10px;
             cursor: pointer;
+            border: 2px solid transparent;
 
             &:hover{
-                border: 2px solid #1F3B73;
+                border-color: #1F3B73;
                 cursor: pointer;
             }
             
