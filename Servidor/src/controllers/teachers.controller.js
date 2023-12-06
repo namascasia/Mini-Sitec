@@ -83,12 +83,17 @@ export class TeachersController {
                 });
             }
 
-            await db.insert(schemas.teachers).values({
-                id, name: name.toUpperCase(), department, status
-            });
+            const newTeacher = {
+                id,
+                name: name.toUpperCase(),
+                department,
+                status
+            };
+
+            await db.insert(schemas.teachers).values(newTeacher);
 
             res.status(HTTP_CODES.CREATED).json({
-                data: null,
+                data: newTeacher,
                 message: 'Maestro creado exitosamente',
             });
 

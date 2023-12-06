@@ -70,16 +70,22 @@ export class StudentsController {
                 });
             }
 
-            await db.insert(schemas.students).values({
-                nControl, name: name.toUpperCase(), career, status
-            });
+            const newStudent = {
+                nControl,
+                name: name.toUpperCase(),
+                career,
+                status
+            };
+
+            await db.insert(schemas.students).values(newStudent);
 
             res.status(HTTP_CODES.CREATED).json({
-                data: null,
+                data: newStudent,
                 message: 'Estudiante creado exitosamente',
             });
 
         } catch (error) {
+            console.log(error);
             res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).json({
                 data: null,
                 message: 'Ha ocurrido un error mientras se realizaba esta operacion.',

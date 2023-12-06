@@ -42,16 +42,20 @@ export class SubjectsController {
             if (credits > 20) {
                 return res.status(HTTP_CODES.BAD_REQUEST).json({
                     data: null,
-                    message: 'No es posible agregar una materia de mas de 6 creditos'
+                    message: 'No es posible agregar una materia de mas de 20 creditos'
                 });
             }
 
-            await db.insert(schemas.subjects).values({
-                id, name, credits
-            });
+            const newSubject = {
+                id,
+                name: name.toUpperCase(),
+                credits
+            };
+
+            await db.insert(schemas.subjects).values(newSubject)
 
             res.status(HTTP_CODES.CREATED).json({
-                data: null,
+                data: newSubject,
                 message: 'Materia creada exitosamente'
             });
 
