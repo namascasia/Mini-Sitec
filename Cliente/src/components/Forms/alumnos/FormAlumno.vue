@@ -1,24 +1,50 @@
 <script setup>
+import { ref } from 'vue';
+import Input from '../../Input/Input.vue';
+import { createStudent } from '../../../utils/petitions/students';
 
-const inputs = ['N.Control', 'Nombre', 'Carrera'];
+const { closeModal } = defineProps({
+    closeModal: Function
+});
+
+const INITIAL_STATE = {
+    nControl: '',
+    name: '',
+    career: '',
+    status: ''
+};
+
+const inputValues = ref(INITIAL_STATE);
+
+const onSubmit = async() => {
+    const { nControl, name, career, status } = inputValues.value;
+    if ([nControl.trim(), name.trim(), career.trim(), status.trim()].includes("")) return;
+
+    const { ok } = await createStudent(inputValues.value);
+
+    if (ok) {
+        closeModal();
+        inputValues.value = INITIAL_STATE;
+    }
+}
 
 </script>
 
 <template>
-    <div class="grid">
-        <div class="info" v-for="input in inputs" :key="input">
-            <label>{{ input }}</label>
-            <input type="text" :placeholder="input">
-        </div>
+    <form @submit.prevent="onSubmit" class="grid">
+        <Input v-model="inputValues.nControl" label="n.Control" type="number" />
+        <Input v-model="inputValues.name" label="Nombre" type="text" />
+        <Input v-model="inputValues.career" label="Carrera" type="text" />
         <div class="info">
-            <label>Estatus</label>
-            <select>
+            <label for="Estatus">Estatus</label>
+            <select v-model="inputValues.status" id="Estatus">
                 <option value="" disabled >Seleccione</option>
                 <option value="V">Activo</option>
                 <option value="B">Baja</option>
             </select>
         </div>
-    </div>
+    </form>
+    <button @click="onSubmit" class="buttonSave">Guardar</button> 
 </template>
 
 

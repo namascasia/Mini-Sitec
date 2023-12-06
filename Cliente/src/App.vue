@@ -2,9 +2,11 @@
 import Menu from './components/Menu/Menu.vue';
 import { getStudents } from './utils/petitions/students';
 import { getSubjects } from './utils/petitions/subjects';
+import { getTeachers } from './utils/petitions/teachers';
 
 getStudents();
 getSubjects();
+getTeachers();
 </script>
 
 <template>

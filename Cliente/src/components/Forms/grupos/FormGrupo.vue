@@ -25,7 +25,12 @@ for(let i = 0; i < horas.length - 1; i++) {
             </select>
         </div>
         <div class="info">
-
+            <label for="maestro">Maestro</label>
+            <select id="maesttro">
+                <option v-for="teacher in ['Seleccione', ...store.teachers]" :value="teacher.id" :disabled="teacher === 'Seleccione'">
+                    {{ teacher.name }}
+                </option>
+            </select>
         </div>
         <div class="info" v-for="input in inputs">
             <label>{{ input }}</label>

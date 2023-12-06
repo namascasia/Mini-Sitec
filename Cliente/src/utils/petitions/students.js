@@ -1,25 +1,24 @@
 import { MESSAGES_TYPES, notify, confirm } from "../helpers";
 import { useStore } from "../../store/store";
 import { api } from '../../api'
+import { HttpStatusCode } from "axios";
 
 const store = useStore();
 
-export const createStudent = async (student = []) => {
+export const createStudent = async (student = {}) => {
+    const { data, status } = await api.post('/students/create', student);
 
-    const newStudent = {
-        nControl: student[0].value,
-        name: student[1].value,
-        career: student[2].value,
-        status: student[3].value
-    }
-    try {
-        const { data } = await api.post('/students/create', newStudent);
+    if (status == HttpStatusCode.Created) {
         notify(data.message);
         store.students.push(data.data);
-    } catch (error) {
-        const { response } = error;
-        notify(response.data.message, MESSAGES_TYPES.ERROR);
+        return { ok: true };
     }
+
+    if (status >= HttpStatusCode.BadRequest) {
+        notify(data.message, MESSAGES_TYPES.ERROR);
+        return { ok: false };
+    }
+
 
 }
 

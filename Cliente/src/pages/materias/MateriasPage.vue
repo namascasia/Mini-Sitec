@@ -8,8 +8,6 @@ import { useStore } from '../../store/store';
 const store = useStore();
 const modalRef = ref(null);
 const headerTable = ['Clave materia', 'Nombre', 'Creditos', 'Acciones'];
-
-let numMaterias = 0;
 </script>
 
 <template>

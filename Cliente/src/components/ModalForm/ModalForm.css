@@ -13,7 +13,7 @@
         cursor: pointer;
     }
 
-    & form {
+    & > article {
         display: flex;
         flex-direction: column;
         width: auto;

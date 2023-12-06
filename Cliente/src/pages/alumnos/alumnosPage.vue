@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { deleteStudent } from '../../utils/petitions/students';
 import { useStore } from "../../store/store";
 import Button from '../../components/Button/Button.vue';
@@ -9,8 +9,11 @@ import FormAlumno from '../../components/Forms/alumnos/FormAlumno.vue';
 const modalRef = ref(null);
 const store = useStore();
 
-const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
+const activeStudents = computed(() => {
+    return store.students.filter(student => student.status !== 'B' ).length;
+})
 
+const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
 </script>
 
 <template>
@@ -55,10 +58,10 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
         </article>  
         <article class="containerNumEstudiantes">
             <img src="/img/userBlue.png" alt="user">
-            <label> Existen {{ store.students.le }} alumnos</label>
+            <label> Existen {{ activeStudents }} alumnos</label>
         </article>
         <ModalForm ref="modalRef">
-            <FormAlumno />
+            <FormAlumno :close-modal="modalRef.closeModal" />
         </ModalForm>
     </section>    
 </template>
