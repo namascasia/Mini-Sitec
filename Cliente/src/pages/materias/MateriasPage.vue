@@ -1,9 +1,12 @@
 <script setup>
-import Form from '../../components/Form/Form.vue';
 import { ref } from 'vue';
+import Button from '../../components/Button/Button.vue';
+import ModalForm from '../../components/ModalForm/ModalForm.vue';
+import FormMateria from '../../components/Forms/materias/FormMateria.vue';
+import { useStore } from '../../store/store';
 
-const formRef = ref(null);
-
+const store = useStore();
+const modalRef = ref(null);
 const headerTable = ['Clave materia', 'Nombre', 'Creditos', 'Acciones'];
 
 let numMaterias = 0;
@@ -17,12 +20,7 @@ let numMaterias = 0;
                 <h2>MATERIAS</h2>
             </ariticle>
             <ariticle class="infoDer">
-                <button @click="formRef.toggleForm()">
-                    Agregar materia
-                    <figure>
-                        <img src="/img/crearuser.png" alt="Logo crear usuario">
-                    </figure>
-                </button>
+                <Button @click="modalRef.openModal()" text="Agregar materia" />
             </ariticle>
         </header>
         <article class="containerTable">
@@ -31,17 +29,17 @@ let numMaterias = 0;
                     <div v-for="header in headerTable">{{ header }}</div>
                 </div>
             </div>
-            <div class="body">
-                <div class="row">
-                    <div>100</div>
-                    <div>Programación web</div>
-                    <div>6</div>
-                    <div>
+            <ul class="body">
+                <li class="row" v-for="subject in store.subjects" :key="subject.id">
+                    <p>{{ subject.id }}</p>
+                    <p>{{ subject.name }}</p>
+                    <p>{{ subject.credits }}</p>
+                    <p>
                         <img class="edit" src="/img/note.png" alt="editar">  
                         <img class="delete" src="/img/delete.png" alt="borrar">
-                    </div>
-                </div>
-            </div>
+                    </p>
+                </li>
+            </ul>
         </article>
         <article class="containerPrevNext">
             <article class="containerButtonsText">
@@ -52,10 +50,12 @@ let numMaterias = 0;
         </article>  
         <article class="containerNumEstudiantes">
             <img src="/img/userBlue.png" alt="user">
-            <label> Existen {{ numMaterias }} materias</label>
+            <label> Existen {{ store.subjects.length }} materias</label>
         </article>
 
-        <Form ref="formRef" :labels="headerTable.filter(header => header !== 'Acciones')" />
+        <ModalForm ref="modalRef">
+            <FormMateria />
+        </ModalForm>
     </section>    
 </template>
 

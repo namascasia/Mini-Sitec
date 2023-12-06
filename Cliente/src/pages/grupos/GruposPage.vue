@@ -1,8 +1,10 @@
 <script setup>
-import Form from '../../components/Form/Form.vue';
 import { ref } from 'vue';
+import Button from '../../components/Button/Button.vue';
+import ModalForm from '../../components/ModalForm/ModalForm.vue';
+import FormGrupo from '../../components/Forms/grupos/FormGrupo.vue';
 
-const formRef = ref(null);
+const modalRef = ref(null);
 
 const headerTable = ['Materia', 'Grupo', 'Maestro', 'Limite alumnos', 'Inscritos', 'Horario Lunes',
 'Horario Martes','Horario Miercoles','Horario Jueves','Horario Viernes', 'Acciones'];
@@ -18,12 +20,7 @@ let numGrupos = 0;
                 <h2>GRUPOS</h2>
             </ariticle>
             <ariticle class="infoDer">
-                <button @click="formRef.toggleForm()">
-                    Agregar grupo
-                    <figure>
-                        <img src="/img/crearuser.png" alt="Logo crear usuario">
-                    </figure>
-                </button>
+                <Button @click="modalRef.openModal()" text="Agregar grupo" />
             </ariticle>
         </header>
         <article class="containerTable">
@@ -63,7 +60,9 @@ let numGrupos = 0;
             <label> Existen {{ numGrupos }} grupos</label>
         </article>
 
-        <Form ref="formRef" :labels="headerTable.filter(header => header !== 'Acciones')" />
+        <ModalForm ref="modalRef">
+            <FormGrupo />
+        </ModalForm>
     </section>    
 </template>
 

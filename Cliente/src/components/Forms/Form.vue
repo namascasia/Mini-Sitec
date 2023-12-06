@@ -1,10 +1,15 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 import { createStudent } from '../../utils/petitions/students';
+
 const { labels, endpoint } = defineProps({
     labels: Array,
     endpoint: {
         type: String,
+        required: false
+    },
+    info: {
+        type: Object,
         required: false
     }
 });

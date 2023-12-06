@@ -1,14 +1,15 @@
 <script setup>
 import { ref } from 'vue';
+import { deleteStudent } from '../../utils/petitions/students';
 import { useStore } from "../../store/store";
-import Form from '../../components/Form/Form.vue';
-import { getStudents, deleteStudent } from '../../utils/petitions/students';
+import Button from '../../components/Button/Button.vue';
+import ModalForm from '../../components/ModalForm/ModalForm.vue';
+import FormAlumno from '../../components/Forms/alumnos/FormAlumno.vue';
 
-const formRef = ref(null);
+const modalRef = ref(null);
 const store = useStore();
-const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
 
-getStudents();
+const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
 
 </script>
 
@@ -20,12 +21,7 @@ getStudents();
                 <h2>ALUMNOS</h2>
             </ariticle>
             <ariticle class="infoDer">
-                <button @click="formRef.toggleForm()">
-                    Agregar alumno
-                    <figure>
-                        <img src="/img/crearuser.png" alt="Logo crear usuario">
-                    </figure>
-                </button>
+                <Button @click="modalRef.openModal()" text="Agregar alumno" />
             </ariticle>
         </header>
         <article class="containerTable">
@@ -59,10 +55,11 @@ getStudents();
         </article>  
         <article class="containerNumEstudiantes">
             <img src="/img/userBlue.png" alt="user">
-            <label> Existen {{ store.students.length }} alumnos</label>
+            <label> Existen {{ store.students.le }} alumnos</label>
         </article>
-
-        <Form ref="formRef" endpoint="students" :labels="headerTable.filter(headers => headers !== 'Acciones')" />
+        <ModalForm ref="modalRef">
+            <FormAlumno />
+        </ModalForm>
     </section>    
 </template>
 

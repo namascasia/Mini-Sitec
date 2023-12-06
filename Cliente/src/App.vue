@@ -1,6 +1,10 @@
 <script setup>
 import Menu from './components/Menu/Menu.vue';
+import { getStudents } from './utils/petitions/students';
+import { getSubjects } from './utils/petitions/subjects';
 
+getStudents();
+getSubjects();
 </script>
 
 <template>

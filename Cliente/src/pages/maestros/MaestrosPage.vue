@@ -1,11 +1,12 @@
 <script setup>
-import Form from '../../components/Form/Form.vue';
+import Button from '../../components/Button/Button.vue';
 import { ref } from 'vue';
+import Modalform from '../../components/ModalForm/ModalForm.vue';
+import FormMaestro from '../../components/Forms/maestros/FormMaestro.vue';
 
-const formRef = ref(null);
+const modalRef = ref(null);
 
 const headerTable = ['Clave maestro', 'Nombre', 'Departamento', 'Estatus', 'Acciones'];
-
 let numMaestros = 0;
 </script>
 
@@ -17,12 +18,7 @@ let numMaestros = 0;
                 <h2>MAESTROS</h2>
             </ariticle>
             <ariticle class="infoDer">
-                <button @click="formRef.toggleForm()">
-                    Agregar maestro
-                    <figure>
-                        <img src="/img/crearuser.png" alt="Logo crear usuario">
-                    </figure>
-                </button>
+                <Button @click="modalRef.openModal()" text="Agregar Maestro" />
             </ariticle>
         </header>
         <article class="containerTable">
@@ -56,7 +52,9 @@ let numMaestros = 0;
             <label> Existen {{ numMaestros }} Maestros</label>
         </article>
 
-        <Form ref="formRef" :labels="headerTable.filter(header => header !== 'Acciones')"/>
+        <Modalform ref="modalRef">
+            <FormMaestro />
+        </ModalForm>
     </section>    
 </template>
 
