@@ -9,8 +9,6 @@ export const usePagination = (term) => {
         return Math.ceil(store[term].length / 4, -1);
     });
 
-    console.log(numberOfPages.value);
-
     const nextPage = () => {
         if (page.value == numberOfPages.value - 1) return;
         page.value++;

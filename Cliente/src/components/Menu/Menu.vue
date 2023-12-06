@@ -12,6 +12,7 @@ const route = useRoute();
         <nav class="nav">
             <ul>
                 <li @click="router.push('/inicio')" class="list_item" :class="route.path === '/inicio' ? 'active': ''">
+                    <img src="/img/home.png" alt="Home icon">
                     Inicio
                 </li>
                 <li @click="router.push('/grupos')" class="list_item" :class="route.path === '/grupos' ? 'active' : ''">

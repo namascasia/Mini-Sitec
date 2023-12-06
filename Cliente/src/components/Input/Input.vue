@@ -4,6 +4,7 @@ const { label, type, placeHolder, modelValue } = defineProps({
     label: String,
     type: String,
     placeHolder: String,
+    length: Number,
     modelValue: String
 });
 
@@ -14,7 +15,7 @@ defineEmits(['update:modelValue']);
 <template>
     <div class="info">
         <label :for="label">{{ label }}</label>
-        <input :type="type" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" :id="label" :placeholder="placeHolder" required>
+        <input :type="type" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" :id="label" :placeholder="placeHolder" :maxlength="length" required>
     </div>
 </template>
 

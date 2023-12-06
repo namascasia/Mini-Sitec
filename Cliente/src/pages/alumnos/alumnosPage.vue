@@ -13,7 +13,7 @@ const store = useStore();
 const { page, offset, limit, nextPage, previousPage } = usePagination('students');
 
 const activeStudents = computed(() => {
-    return store.students.filter(student => student.status !== 'B' ).length;
+    return store.students.filter(student => student.status !== STATUS.DELETED ).length;
 })
 
 const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
