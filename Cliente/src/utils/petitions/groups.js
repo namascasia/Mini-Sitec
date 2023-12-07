@@ -1,5 +1,5 @@
 import { api } from '../../api';
-import { MESSAGES_TYPES, notify } from '../helpers'
+import { MESSAGES_TYPES, confirm, notify } from '../helpers'
 import { useStore } from '../../store/store';
 import { HttpStatusCode } from 'axios';
 
@@ -70,15 +70,20 @@ export const updateGroup = async (group) => {
 
 }
 
-export const deleteGroup = async (group) => {
-    const { data, status } = await api.delete(`/groups/delete/${group.id}`);
+export const deleteGroup = async (groupId) => {
+
+    const isOk = await confirm('grupo');
+
+    if (!isOk) return;
+
+    const { data, status } = await api.delete(`/groups/delete/${groupId}`);
 
     if (status >= HttpStatusCode.BadRequest) {
         notify(data.message, MESSAGES_TYPES.ERROR);
         return { ok: false };
     }
 
-    const newGroups = store.groups.filter(({ id }) => id == group.id);
+    const newGroups = store.groups.filter(group => group.id !== groupId);
     store.groups = newGroups;
     notify(data.message);
     return { ok: true };

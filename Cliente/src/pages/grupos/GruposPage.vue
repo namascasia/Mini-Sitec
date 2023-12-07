@@ -6,6 +6,7 @@ import FormGrupo from '../../components/Forms/grupos/FormGrupo.vue';
 import { useStore } from '../../store/store';
 import { usePagination } from '../../composables/usePagination';
 import { ACTIONS } from '../../utils/constants';
+import { deleteGroup } from '../../utils/petitions/groups';
 
 const modalRef = ref(null);
 const groupToEdit = ref(null);
@@ -58,7 +59,7 @@ let numGrupos = 0;
                     <p>{{ group.scheduleFriday }}</p>
                     <div>
                         <img @click="onEdit(group)" class="edit" src="/img/note.png" alt="editar"> 
-                        <button @click="onEdit" class="delete_button" >
+                        <button @click="deleteGroup(group.id)" class="delete_button" >
                             <img class="delete" src="/img/delete.png" alt="borrar">
                         </button>
                     </div>
@@ -67,9 +68,9 @@ let numGrupos = 0;
         </article>
         <article class="containerPrevNext">
             <article class="containerButtonsText">
-                <button>⟸ Prev</button>
-                <label class="counterPage">1</label>
-                <button>Next ⟹</button>
+                <button @click="previousPage" :disabled="store.groups.length === 0">⟸ Prev</button>
+                <label class="counterPage">{{ page + 1 }}</label>
+                <button @click="nextPage" :disabled="store.groups.length === 0">Next ⟹</button>
             </article>
         </article>  
         <article class="containerNumEstudiantes">

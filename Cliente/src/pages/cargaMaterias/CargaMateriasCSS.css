@@ -11,6 +11,7 @@
     margin: 10px;
     background-color: white;
     border-radius: 20px;
+    overflow-x: hidden;
 }
 
 .infoIzq{
@@ -27,6 +28,7 @@
         width: 85%;
         height: 85%;
         border-radius: 5px;
+        overflow-y: scroll;
         padding: 15px;
         margin-left: 20px;
         background-color: #f2f2f2;
@@ -44,6 +46,7 @@
             height: 120px;
             border-radius: 5px;
             padding: 10px;
+            position: relative;
             display: flex;
             flex-direction: column;
             gap: 3px;
@@ -55,16 +58,32 @@
                 background-color: #e6e6e6;
             }
     
-            & label:first-child{
+            & :first-child{
                 font-weight: bold;
                 text-align: center;
             }
     
-            & label:hover{
+            & p:hover{
                 cursor: pointer;
             }
     
         }
+    }
+}
+
+.grupoLleno {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(199, 35, 35, 0.3);
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & h2 {
+        font-weight: bold;
     }
 }
 
@@ -111,8 +130,8 @@
         }
     }
 
-    & span{
-        font-size: 1.2rem;
+    & h2{
+        font-size: 1.5rem;
         font-weight: bold;
         margin-left: 48px;
         background-color: #f2f2f2;
@@ -126,79 +145,94 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* gap: 15px; */
+    gap: 15px;
+    background-color: #f2f2f2;
+}
 
-    & .previewHorario{
-        width: 90%;
-        height: 87%;
-        border-radius: 0px 5px 5px 5px;
-        padding: 15px;
-        background-color: #f6f6f6;
+.previewHorario {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    & li {
+        width: 95%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+        /* position: absolute; */
+        animation: leftToRight 0.3s;
+        transition: all 0.2s;
+
+        &:hover {
+            outline: 1px solid #1F3B73;
+        }
+
+        & img {
+            width: 25px;
+            height: 25px;
+            transition: all 0.3s;
+        }
+
+        & button {
+            border: none;
+            background-color: transparent;
+            padding: 10px;
+            display: flex;
+            gap: 5px;
+            font-weight: bold;
+            align-items: center;
+            box-shadow: 3px 3px 10px rgb(0 0 0 / 20%);
+            margin-right: 20px;
+            border-radius: 7px;
+            transition: all 0.3s;
+
+            &:hover {
+                background-color: #1F3B73;
+                color: #f2f2f2;
+            }
+        }
+    }
+}
+
+@keyframes leftToRight {
+
+    0% {
+        transform: translateX(350px);
+    }
+
+    100% {
+        transform: translateX(0px)
+    }
+    
+}
+
+.infos {
+    display: flex;
+    gap: 10px;
+    height: 100%;
+
+
+    & div:last-child {
+        padding: 15px 15px 15px 0px;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 10px;
+        gap: 5px;
 
-        & ul{
-            width: 98%;
-            height: 85px;
-            border-radius: 5px;
-            padding: 8px;
-            background-color: white;
-            display: flex;
-            gap: 10px;
-            cursor: pointer;
-            /* border: 2px solid transparent; */
-            
-            &:hover{
-                cursor: pointer;
-                /* border-color: #1F3B73; */
-                outline: 2px solid #1F3B73;
-            }
-            
-            & li:nth-child(2){
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
-                font-size: 1rem;
-            }
-
-            & li{
-                list-style: none;
-                display: flex;
-                
-                & figure{
-                    width: 30px;
-                    height: 82px;
-                    margin-top: -8px;
-                    margin-left: 10px;
-                    background-color: #1F3B73;
-                }
-                
-                & label{
-                    cursor: pointer;
-                }
-
-                & label:nth-child(1){
-                    font-weight: bold;
-                    color: #1F3B73;
-                }
-
-                & img{
-                    width: 20px;
-                    height: 20px;
-                    margin-left: 150px;
-                    margin-top: 25px;
-                    cursor: pointer;
-
-                    &:hover{
-                        scale: 1.2;
-                    }
-                }
-            }
-
-        }    
+        & h4 {
+            color: #1F3B73;
+        }
     }
+}
+
+.info_deco {
+    width: 30px;
+    height: 100%;
+    background-color: #1F3B73;
 }
 
 .diasClase{
