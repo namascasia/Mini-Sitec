@@ -95,7 +95,7 @@ export class StudentsController {
     }
 
     async updateStudent(req = request, res = response) {
-        const { name, career } = req.body;
+        const { name, career, status } = req.body;
         const studentId = req.params.id;
 
         try {
@@ -113,7 +113,7 @@ export class StudentsController {
 
 
             await db.update(schemas.students)
-                .set({ name: name.toUpperCase(), career })
+                .set({ name: name.toUpperCase(), career, status })
                 .where(eq(schemas.students.nControl, studentId));
 
             res.json({

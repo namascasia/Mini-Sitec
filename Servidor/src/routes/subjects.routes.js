@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { SubjectsController } from '../controllers/subjects.controller.js';
 import { subjectExists } from '../middlewares/subject-exists.js';
+import { isSubjectRelatedToOneGroup } from '../middlewares/is-subject-related-to-group.js';
 
 const router = Router();
 
@@ -15,7 +16,8 @@ router.put('/update/:id', [
 ], subjectsController.updateSubject);
 
 router.delete('/delete/:id', [
-    subjectExists
+    subjectExists,
+    isSubjectRelatedToOneGroup
 ], subjectsController.deleteSubject);
 
 export default router;
