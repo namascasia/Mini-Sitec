@@ -102,6 +102,39 @@ export class GroupsController {
 
     }
 
+    async inscribe(req = request, res = response) {
+        const groupId = req.params.id;
+        try {
+
+            const [group] = await db.select()
+                .from(schemas.groups)
+                .where(eq(schemas.groups.id, groupId));
+
+            if (group.inscribed === group.studentsLimit) {
+                return res.status(HTTP_CODES.BAD_REQUEST).json({
+                    data: null,
+                    message: 'Este grupo ya está lleno'
+                });
+            }
+
+            await db.update(schemas.groups)
+                .set({
+                    inscribed: group.inscribed + 1
+                })
+                .where(eq(schemas.groups.id, groupId));
+
+            res.json({
+                data: null,
+                message: null
+            });
+        } catch (error) {
+            res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).json({
+                data: null,
+                message: 'Ha ocurrido un error al realizar esta operacion, contacte al administrador'
+            });
+        }
+    }
+
     async deleteGroup(req = request, res = response) {
         const groupId = req.params.id;
         try {
