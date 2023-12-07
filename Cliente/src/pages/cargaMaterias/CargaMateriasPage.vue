@@ -69,7 +69,7 @@ const removeGroup = async(group) => {
     if (!ok) return;
 
     const selectedGroupIndex = store.groups.findIndex(g => g.id == group.id);
-    store.groups[selectedGroupIndex].inscribed = store.groups[selectedGroupIndex].inscribed + 1;
+    store.groups[selectedGroupIndex].inscribed = store.groups[selectedGroupIndex].inscribed - 1;
 
     const newGroupsSelected = groupsSelected.value.filter(groupSelected => groupSelected.id !== group.id);
     groupsSelected.value = newGroupsSelected;
@@ -92,6 +92,9 @@ const getSubjectCredits = (groupSelected) => {
     return store.subjects.find(subject => groupSelected.subjectId === subject.id).credits;
 }
 
+const getTeacherName = (groupSelected) => {
+    return store.teachers.find(teacher => teacher.id == groupSelected.teacherId).name;
+}
 
 </script>
 
@@ -105,10 +108,10 @@ const getSubjectCredits = (groupSelected) => {
             <article class="containerGrupos">
                 <label class="title">Seleccione grupos disponibles</label>
                 <button @click="selectGroup(group)" class="tarjetaGrupos" :disabled="disableGroup(group)" v-for="group in store.groups">
-                    <p>{{ store.subjects.find(subject => group.subjectId == subject.id).name }}</p> 
-                    <p><strong>Creditos:</strong> {{ store.subjects.find(subject => group.subjectId == subject.id).credits }}</p>
+                    <p>{{ getSubjectName(group) }}</p> 
+                    <p><strong>Creditos:</strong> {{ getSubjectCredits(group) }}</p>
                     <p><strong>Horario:</strong> {{ group.scheduleMonday }}</p>
-                    <p><strong>Maestro:</strong> {{ store.teachers.find(teacher => teacher.id === group.teacherId).name }}</p>
+                    <p><strong>Maestro:</strong> {{ getTeacherName(group) }}</p>
                     <!-- <p>Lunes, martes, miercoles...</p> -->
                     <div class="grupoLleno" v-if="group.inscribed === group.studentsLimit">
                         <h2>GRUPO LLENO</h2>

@@ -42,7 +42,7 @@ export const createGroup = async (group) => {
     return { ok: true };
 }
 
-export const updateGroup = async (group) => {
+export const updateGroup = async (group, groupId) => {
 
     const newGroup = {
         ...group,
@@ -55,7 +55,7 @@ export const updateGroup = async (group) => {
         ]
     };
 
-    const { data, status } = await api.put(`/groups/update/${group.id}`, newGroup);
+    const { data, status } = await api.put(`/groups/update/${groupId}`, newGroup);
 
     if (status >= HttpStatusCode.BadRequest) {
         notify(data.message, MESSAGES_TYPES.ERROR);

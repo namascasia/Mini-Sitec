@@ -62,7 +62,7 @@ const onSubmit = async() => {
 
     if (action === ACTIONS.UPDATE) {
         console.log('here');
-        const { ok } = await updateGroup(inputValues.value);
+        const { ok } = await updateGroup(inputValues.value, group.id);
         isOk = ok;        
     }
 
@@ -72,7 +72,6 @@ const onSubmit = async() => {
     }
 }
 
-const selects = ['Horario Lunes', 'Horario Martes', 'Horario Miercoles', 'Horario Jueves', 'Horario Viernes'];
 const horas = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 const horarios = [];
 
