@@ -5,7 +5,6 @@ const isOpen = ref(false);
 
 const openModal = () => {
     isOpen.value = true;
-    console.log('?');
 }
 
 const closeModal = () => {

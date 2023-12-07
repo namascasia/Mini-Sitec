@@ -3,8 +3,23 @@ import { ref } from 'vue';
 import Button from '../../components/Button/Button.vue';
 import ModalForm from '../../components/ModalForm/ModalForm.vue';
 import FormGrupo from '../../components/Forms/grupos/FormGrupo.vue';
+import { useStore } from '../../store/store';
+import { usePagination } from '../../composables/usePagination';
+import { ACTIONS } from '../../utils/constants';
 
 const modalRef = ref(null);
+const groupToEdit = ref(null);
+const action = ref(ACTIONS.CREATE);
+
+const { page, limit, offset, nextPage, previousPage } = usePagination('groups');
+
+const store = useStore();
+
+const onEdit = (group) => {
+    groupToEdit.value = group;
+    action.value = ACTIONS.UPDATE;
+    modalRef.value.openModal();
+}
 
 const headerTable = ['Materia', 'Grupo', 'Maestro', 'Limite alumnos', 'Inscritos', 'Horario Lunes',
 'Horario Martes','Horario Miercoles','Horario Jueves','Horario Viernes', 'Acciones'];
@@ -20,7 +35,7 @@ let numGrupos = 0;
                 <h2>GRUPOS</h2>
             </ariticle>
             <ariticle class="infoDer">
-                <Button @click="modalRef.openModal()" text="Agregar grupo" />
+                <Button @click="action = ACTIONS.CREATE ,modalRef.openModal()" text="Agregar grupo" />
             </ariticle>
         </header>
         <article class="containerTable">
@@ -29,24 +44,26 @@ let numGrupos = 0;
                     <div v-for="header in headerTable">{{ header }}</div>
                 </div>
             </div>
-            <div class="body">
-                <div class="row">
-                    <div>100</div>
-                    <div>Programacion web</div>
-                    <div>Martin Nevares</div>
-                    <div>40</div>
-                    <div>34</div>
-                    <div>12:00-13:00</div>
-                    <div>12:00-13:00</div>
-                    <div>12:00-13:00</div>
-                    <div>12:00-13:00</div>
-                    <div>12:00-13:00</div>
+            <ul class="body">
+                <li class="row" v-for="group in store.groups.slice(offset, limit)">
+                    <p>{{ group.subjectId }}</p>
+                    <p>{{ group.id }}</p>
+                    <p>{{ group.teacherId }}</p>
+                    <p>{{ group.studentsLimit }}</p>
+                    <p>{{ group.inscribed }}</p>
+                    <p>{{ group.scheduleMonday }}</p>
+                    <p>{{ group.scheduleTuesday }}</p>
+                    <p>{{ group.scheduleWednesday }}</p>
+                    <p>{{ group.scheduleThursday }}</p>
+                    <p>{{ group.scheduleFriday }}</p>
                     <div>
-                        <img class="edit" src="/img/note.png" alt="editar"> 
-                        <img class="delete" src="/img/delete.png" alt="borrar">
+                        <img @click="onEdit(group)" class="edit" src="/img/note.png" alt="editar"> 
+                        <button @click="onEdit" class="delete_button" >
+                            <img class="delete" src="/img/delete.png" alt="borrar">
+                        </button>
                     </div>
-                </div>
-            </div>
+                </li>
+            </ul>
         </article>
         <article class="containerPrevNext">
             <article class="containerButtonsText">
@@ -61,7 +78,7 @@ let numGrupos = 0;
         </article>
 
         <ModalForm ref="modalRef">
-            <FormGrupo />
+            <FormGrupo :close-modal="modalRef.closeModal" :action="action" :group="groupToEdit"  />
         </ModalForm>
     </section>    
 </template>

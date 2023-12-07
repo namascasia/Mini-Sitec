@@ -1,5 +1,6 @@
 <script setup>
 import Menu from './components/Menu/Menu.vue';
+import { getGroups } from './utils/petitions/groups';
 import { getStudents } from './utils/petitions/students';
 import { getSubjects } from './utils/petitions/subjects';
 import { getTeachers } from './utils/petitions/teachers';
@@ -7,6 +8,7 @@ import { getTeachers } from './utils/petitions/teachers';
 getStudents();
 getSubjects();
 getTeachers();
+getGroups();
 </script>
 
 <template>

@@ -6,8 +6,7 @@ import { usePagination } from '../../composables/usePagination';
 import Button from '../../components/Button/Button.vue';
 import ModalForm from '../../components/ModalForm/ModalForm.vue';
 import FormAlumno from '../../components/Forms/alumnos/FormAlumno.vue';
-import { STATUS } from '../../utils/constants/status.contants';
-import { ACTIONS } from '../../utils/constants/actions';
+import { STATUS, ACTIONS } from '../../utils/constants';
 
 const modalRef = ref(null);
 const studentToEdit = ref(null);
@@ -37,7 +36,7 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
                 <h2>ALUMNOS</h2>
             </ariticle>
             <ariticle class="infoDer">
-                <Button @click="onEdit" text="Agregar alumno" />
+                <Button @click="action = ACTIONS.CREATE, modalRef.openModal()" text="Agregar alumno" />
             </ariticle>
         </header>
         <article class="containerTable">

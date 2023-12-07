@@ -1,4 +1,7 @@
 <script setup>
+import { useStore } from '../../store/store';
+
+const store = useStore();
 
 </script>
 
@@ -28,8 +31,13 @@
         <section class="containerPreview">
             <article class="datosAlumno">
                 <span> Preview de carga</span>
-                <label>N. control</label>
-                <input type="text" placeholder="N. control">
+                <label for="nControl">N. control</label>
+                <select id="nControl">
+                    <option value="" disabled selected>Seleccione</option>
+                    <option v-for="student in store.students" :value="student.nControl">
+                        {{ student.nControl }}
+                    </option>
+                </select>
                 <button>Cargar</button>
             </article>  
             <article class="previewHorario">

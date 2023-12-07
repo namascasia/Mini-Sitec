@@ -5,12 +5,21 @@ import Modalform from '../../components/ModalForm/ModalForm.vue';
 import FormMaestro from '../../components/Forms/maestros/FormMaestro.vue';
 import { useStore } from '../../store/store';
 import { usePagination } from '../../composables/usePagination';
-import { STATUS } from '../../utils/constants/status.contants';
+import { STATUS, ACTIONS } from '../../utils/constants';
 import { deleteTeacher } from '../../utils/petitions/teachers';
 
 const modalRef = ref(null);
+const teacherToEdit = ref(null);
+const action = ref(ACTIONS.CREATE);
+
 const { page, offset, limit, nextPage, previousPage } = usePagination('teachers');
 const store = useStore();
+
+const onEdit = (teacher) => {
+    teacherToEdit.value = teacher;
+    action.value = ACTIONS.UPDATE;
+    modalRef.value.openModal();
+}
 
 const headerTable = ['Clave maestro', 'Nombre', 'Departamento', 'Estatus', 'Acciones'];
 </script>
@@ -23,7 +32,7 @@ const headerTable = ['Clave maestro', 'Nombre', 'Departamento', 'Estatus', 'Acci
                 <h2>MAESTROS</h2>
             </ariticle>
             <ariticle class="infoDer">
-                <Button @click="modalRef.openModal()" text="Agregar Maestro" />
+                <Button @click="action = ACTIONS.CREATE, modalRef.openModal()" text="Agregar Maestro" />
             </ariticle>
         </header>
         <article class="containerTable">
@@ -39,7 +48,7 @@ const headerTable = ['Clave maestro', 'Nombre', 'Departamento', 'Estatus', 'Acci
                     <p>{{ teacher.department }}</p>
                     <p>{{ teacher.status }}</p>
                     <div>
-                        <img class="edit" src="/img/note.png" alt="editar">  
+                        <img @click="onEdit(teacher)" class="edit" src="/img/note.png" alt="editar">  
                         <button class="delete_button" :disabled="teacher.status === STATUS.DELETED">
                             <img @click="deleteTeacher(teacher.id)" class="delete" :class="teacher.status === STATUS.DELETED ? 'disabled' : ''" src="/img/delete.png" alt="borrar">
                         </button>
@@ -49,9 +58,9 @@ const headerTable = ['Clave maestro', 'Nombre', 'Departamento', 'Estatus', 'Acci
         </article>
         <article class="containerPrevNext">
             <article class="containerButtonsText">
-                <button @click="previousPage()">⟸ Prev</button>
+                <button @click="previousPage()" :disabled="store.teachers.length === 0">⟸ Prev</button>
                 <label class="counterPage">{{ page + 1 }}</label>
-                <button @click="nextPage()">Next ⟹</button>
+                <button @click="nextPage()" :disabled="store.teachers.length === 0">Next ⟹</button>
             </article>
         </article>  
         <article class="containerNumEstudiantes">
@@ -59,7 +68,7 @@ const headerTable = ['Clave maestro', 'Nombre', 'Departamento', 'Estatus', 'Acci
             <label> Existen {{ store.teachers.length }} Maestros</label>
         </article>
         <Modalform ref="modalRef">
-            <FormMaestro :close-modal="modalRef.closeModal" />
+            <FormMaestro :close-modal="modalRef.closeModal" :action="action" :teacher="teacherToEdit" />
         </ModalForm>
     </section>    
 </template>

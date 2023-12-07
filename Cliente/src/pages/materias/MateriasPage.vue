@@ -5,7 +5,8 @@ import ModalForm from '../../components/ModalForm/ModalForm.vue';
 import FormMateria from '../../components/Forms/materias/FormMateria.vue';
 import { useStore } from '../../store/store';
 import { usePagination } from '../../composables/usePagination';
-import { ACTIONS } from '../../utils/constants/actions';
+import { deleteSubject } from '../../utils/petitions/subjects';
+import { ACTIONS, STATUS } from '../../utils/constants';
 
 const modalRef = ref(null);
 const subjectToEdit = ref(null);
@@ -47,7 +48,9 @@ const headerTable = ['Clave materia', 'Nombre', 'Creditos', 'Acciones'];
                     <p>{{ subject.credits }}</p>
                     <div>
                         <img @click="onEdit(subject)" class="edit" src="/img/note.png" alt="editar">  
-                        <img class="delete" src="/img/delete.png" alt="borrar">
+                        <button class="delete_button" :disabled="subject.status === STATUS.DELETED">
+                            <img @click="deleteSubject(subject.id)" class="delete" :class="subject.status === STATUS.DELETED ? 'disabled' : ''" src="/img/delete.png" alt="borrar">
+                        </button>
                     </div>
                 </li>
             </ul>

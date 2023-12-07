@@ -8,15 +8,14 @@ const store = useStore();
 export const createStudent = async (student = {}) => {
     const { data, status } = await api.post('/students/create', student);
 
-    if (status == HttpStatusCode.Created) {
-        notify(data.message);
-        store.students.push(data.data);
-        return { ok: true };
+    if (status >= HttpStatusCode.BadRequest) {
+        notify(data.message, MESSAGES_TYPES.ERROR);
+        return { ok: false };
     }
 
-    notify(data.message, MESSAGES_TYPES.ERROR);
-    return { ok: false };
-
+    notify(data.message);
+    store.students.push(data.data);
+    return { ok: true };
 
 }
 
@@ -47,7 +46,7 @@ export const deleteStudent = async (studentId) => {
     const index = store.students.findIndex(student => student.nControl === studentId);
     store.students[index].status = 'B';
 
-    notify(data.message, MESSAGES_TYPES.INFO);
+    notify(data.message);
 }
 
 export const updateStudent = async (student) => {

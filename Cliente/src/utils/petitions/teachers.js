@@ -30,6 +30,20 @@ export const createTeacher = async (teacher = {}) => {
     return { ok: false }
 }
 
+export const updateTeacher = async (teacher) => {
+    const { data, status } = await api.put(`/teachers/update/${teacher.id}`, teacher);
+
+    if (status >= HttpStatusCode.BadRequest) {
+        notify(data.message, MESSAGES_TYPES.ERROR);
+        return { ok: false };
+    }
+
+    const teacherIndex = store.teachers.findIndex(({ id }) => id == teacher.id);
+    store.teachers[teacherIndex] = teacher;
+    notify(data.message);
+    return { ok: true };
+}
+
 export const deleteTeacher = async (teacherId) => {
 
     const isOk = await confirm('maestro');
@@ -45,5 +59,5 @@ export const deleteTeacher = async (teacherId) => {
 
     const teacherIndex = store.teachers.findIndex(teacher => teacher.id === teacherId);
     store.teachers[teacherIndex].status = STATUS.DELETED;
-    notify(data.message, MESSAGES_TYPES.INFO);
+    notify(data.message);
 }

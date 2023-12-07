@@ -134,6 +134,18 @@ header{
     height: 25px;
 }
 
+.delete_button {
+    background-color: transparent;
+    border: none;
+    display: flex;
+}
+
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
 .delete {
     width: 20px;
     height: 20px;

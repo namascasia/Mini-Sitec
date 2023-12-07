@@ -1,17 +1,29 @@
 <script setup>
 import { ref } from 'vue';
 import Input from '../../Input/Input.vue';
-import { createTeacher } from '../../../utils/petitions/teachers';
+import { createTeacher, updateTeacher } from '../../../utils/petitions/teachers';
+import { ACTIONS } from '../../../utils/constants/actions';
 
-const { closeModal } = defineProps({
-    closeModal: Function
+const { closeModal, action, teacher } = defineProps({
+    closeModal: Function,
+    action: {
+        type: String,
+        required: false,
+        default: ACTIONS.CREATE
+    },
+    teacher: {
+        type: Object,
+        required: false
+    }
 });
 
+const isForUpdate = action === ACTIONS.UPDATE;
+
 const INITIAL_STATE = {
-    id: '',
-    name: '',
-    department: '',
-    status: ''
+    id: isForUpdate ? teacher.id.toString() : '',
+    name: isForUpdate ? teacher.name : '',
+    department: isForUpdate ? teacher.department.toString() : '',
+    status: isForUpdate ? teacher.status : ''
 };
 
 const inputValues = ref(INITIAL_STATE);
@@ -20,17 +32,22 @@ const onSubmit = async() => {
     const { id, name, department, status } = inputValues.value;
     if ([id.trim(), name.trim(), department.trim(), status.trim()].includes("")) return;
 
-    const { ok } = await createTeacher(inputValues.value);
-    if (ok) {
+    let isOk;
+    if (action === ACTIONS.CREATE) {
+        const { ok } = await createTeacher(inputValues.value);
+        isOk = ok;
+    }
+
+    if (action === ACTIONS.UPDATE) {
+        const { ok } = await updateTeacher(inputValues.value);
+        isOk = ok;        
+    }
+
+    if (isOk) {
         closeModal();
         inputValues.value = INITIAL_STATE;
-    } 
-
+    }
 }
-
-
-
-const inputs = ['Clave maestro', 'Nombre', 'Departamento'];
 
 </script>
 
