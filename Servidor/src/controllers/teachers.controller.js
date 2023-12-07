@@ -108,7 +108,7 @@ export class TeachersController {
     }
 
     async updateTeacher(req = request, res = response) {
-        const { name, department } = req.body;
+        const { name, department, status } = req.body;
         const teacherId = req.params.id;
 
         try {
@@ -126,7 +126,7 @@ export class TeachersController {
 
 
             await db.update(schemas.teachers)
-                .set({ name: name.toUpperCase(), department })
+                .set({ name: name.toUpperCase(), department, status })
                 .where(eq(schemas.teachers.id, teacherId));
 
             res.json({
