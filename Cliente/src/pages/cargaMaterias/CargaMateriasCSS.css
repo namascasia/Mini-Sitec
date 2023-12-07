@@ -83,7 +83,7 @@
         margin-top: -10px;
     }
 
-    & input{
+    & select{
         width: 200px;
         height: 30px;
         padding: 5px;
@@ -148,11 +148,12 @@
             display: flex;
             gap: 10px;
             cursor: pointer;
-            border: 2px solid transparent;
-
+            /* border: 2px solid transparent; */
+            
             &:hover{
-                border-color: #1F3B73;
                 cursor: pointer;
+                /* border-color: #1F3B73; */
+                outline: 2px solid #1F3B73;
             }
             
             & li:nth-child(2){

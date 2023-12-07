@@ -1,5 +1,5 @@
 import { api } from '../../api';
-import { notify } from '../helpers'
+import { MESSAGES_TYPES, notify } from '../helpers'
 import { useStore } from '../../store/store';
 import { HttpStatusCode } from 'axios';
 
@@ -43,7 +43,19 @@ export const createGroup = async (group) => {
 }
 
 export const updateGroup = async (group) => {
-    const { data, status } = await api.put(`/groups/update/${group.id}`, group);
+
+    const newGroup = {
+        ...group,
+        schedules: [
+            group.scheduleMonday,
+            group.scheduleTuesday,
+            group.scheduleWednesday,
+            group.scheduleThursday,
+            group.scheduleFriday
+        ]
+    };
+
+    const { data, status } = await api.put(`/groups/update/${group.id}`, newGroup);
 
     if (status >= HttpStatusCode.BadRequest) {
         notify(data.message, MESSAGES_TYPES.ERROR);
@@ -51,6 +63,7 @@ export const updateGroup = async (group) => {
     }
 
     const groupIndex = store.groups.findIndex(({ id }) => id == group.id);
+    console.log({ groupIndex });
     store.groups[groupIndex] = group;
     notify(data.message);
     return { ok: true };

@@ -14,16 +14,10 @@ const store = useStore();
             </ariticle>
             <article class="containerGrupos">
                 <label class="title">Seleccione grupos disponibles</label>
-                <div class="tarjetaGrupos">
-                    <label>Poo</label> 
-                    <label>Creditos: 5</label>
-                    <label>Hora: 12:00 / 13:00</label>
-                    <label>Lunes, martes, miercoles...</label>
-                </div>
-                <div class="tarjetaGrupos">
-                    <label>Ing. web</label> 
-                    <label>Creditos: 6</label>
-                    <label>Hora: 10:00 / 11:00</label>
+                <div class="tarjetaGrupos" v-for="group in store.groups">
+                    <label>{{ store.subjects.find(subject => group.subjectId === subject.id).name }}</label> 
+                    <label>Creditos: {{ store.subjects.find(subject => group.subjectId === subject.id).credits }}</label>
+                    <label>Hora: {{ group.scheduleMonday }}</label>
                     <label>Lunes, martes, miercoles...</label>
                 </div>
             </article>
@@ -50,13 +44,13 @@ const store = useStore();
                     </li>
                     <li class="diasClase">
                         <label> Dias de clase</label>
-                        <!-- <ul id="row">
+                        <ul id="row">
                             <li>Lunes</li>
                             <li>Martes</li>
                             <li>Miercoles</li>
                             <li>Jueves</li>
                             <li>Viernes</li>
-                        </ul> -->
+                        </ul>
                     </li>
                     <li>
                         <img src="/img/delete.png" alt="eliminar">

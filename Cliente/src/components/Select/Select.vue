@@ -1,8 +1,6 @@
 <script setup>
-const { label, type, placeholder, modelValue } = defineProps({
+const { label, modelValue, values } = defineProps({
     label: String,
-    type: String,
-    length: Number,
     modelValue: String,
     values: String
 })
@@ -15,7 +13,7 @@ defineEmits(['update:modelValue']);
 <template>
     <div class="info">
         <label :for="label">{{ label }}</label>
-        <select :id="label">
+        <select :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" :id="label">
             <option value="" selected disabled>Seleccione</option>
             <option v-for="value in values" :value="value" :key="value">
                 {{ value }}

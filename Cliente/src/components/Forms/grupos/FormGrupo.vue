@@ -4,6 +4,7 @@ import { useStore } from '../../../store/store';
 import { ACTIONS } from '../../../utils/constants/actions';
 import { createGroup, updateGroup } from '../../../utils/petitions/groups';
 import Input from '../../Input/Input.vue';
+import Select from '../../Select/Select.vue';
 
 const { closeModal, action, group } = defineProps({
     closeModal: Function,
@@ -41,14 +42,15 @@ const inputValues = ref(INITIAL_STATE);
 const onSubmit = async() => {
     const { 
         id, subjectId, teacherId, 
-        studentsLimit, inscribed, scheduleMonday,
+        studentsLimit, scheduleMonday,
         scheduleTuesday, scheduleWednesday, scheduleThursday,
         scheduleFriday } = inputValues.value;
+        console.log(inputValues.value);
     if (
         [
             id.trim(), subjectId.trim(), teacherId.trim(), studentsLimit.trim(),
-            inscribed.trim(), scheduleMonday.trim(), scheduleTuesday.trim(),
-            scheduleWednesday.trim(), scheduleThursday.trim(), scheduleFriday.trim()
+            scheduleMonday.trim(), scheduleTuesday.trim(), scheduleWednesday.trim(), 
+            scheduleThursday.trim(), scheduleFriday.trim()
         ].includes("")
         ) return;
 
@@ -59,6 +61,7 @@ const onSubmit = async() => {
     }
 
     if (action === ACTIONS.UPDATE) {
+        console.log('here');
         const { ok } = await updateGroup(inputValues.value);
         isOk = ok;        
     }
@@ -71,7 +74,7 @@ const onSubmit = async() => {
 
 const selects = ['Horario Lunes', 'Horario Martes', 'Horario Miercoles', 'Horario Jueves', 'Horario Viernes'];
 const horas = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-const horarios = ['Seleccione'];
+const horarios = [];
 
 for(let i = 0; i < horas.length - 1; i++) {
     horarios.push(`${horas[i]}-${horas[i + 1]}`);
@@ -94,21 +97,18 @@ for(let i = 0; i < horas.length - 1; i++) {
             <label for="maestro">Maestro</label>
             <select v-model="inputValues.teacherId" id="maestro">
                 <option value="" disabled selected>Seleccione</option>
-                <option v-for="teacher in store.teachers" :value="teacher.id">
+                <option v-for="teacher in store.teachers" :value="teacher.id.toString()">
                     {{ teacher.name }}
                 </option>
             </select>
         </div>
         <Input v-model="inputValues.id" label="Grupo" type="text" place-holder="Grupo" />
         <Input v-model="inputValues.studentsLimit" label="Limite alumnos" type="text" place-holder="Limite Alumnos" />
-        <div class="info" v-for="select in selects" :key="select">
-            <label :for="select">{{ select }}</label>
-            <select :id="select">
-                <option v-for="horario in horarios" value="horario" :disabled="horario === 'Seleccione'">
-                    {{ horario }}
-                </option>
-            </select>
-        </div>
+        <Select v-model="inputValues.scheduleMonday" label="Horario Lunes"  :values="horarios" />
+        <Select v-model="inputValues.scheduleTuesday" label="Horario Martes"  :values="horarios" />
+        <Select v-model="inputValues.scheduleWednesday" label="Horario Miercoles"  :values="horarios" />
+        <Select v-model="inputValues.scheduleThursday" label="Horario Jueves"  :values="horarios" />
+        <Select v-model="inputValues.scheduleFriday" label="Horario Viernes"  :values="horarios" />
     </form>
     <button @click="onSubmit" class="buttonSave">Guardar</button> 
 </template>
