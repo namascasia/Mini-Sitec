@@ -53,8 +53,8 @@ const onSubmit = async() => {
 
 <template>
     <form @submit.prevent="onSubmit" class="grid">
-       <Input v-model="inputValues.id" label="Clave Materia" type="text" :length="11" place-holder="Clave materia" />
-       <Input v-model="inputValues.name" label="Nombre" type="text" place-holder="Nombre" />
+       <Input v-model="inputValues.id" label="Clave Materia" type="text" :length="8" place-holder="Clave materia" />
+       <Input v-model="inputValues.name" label="Nombre" type="text" :length="150" place-holder="Nombre" />
        <Input v-model="inputValues.credits" label="Creditos" type="number" place-holder="Creditos" />
     </form>
     <button @click="onSubmit" class="buttonSave">Guardar</button> 

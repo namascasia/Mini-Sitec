@@ -61,7 +61,6 @@ const onSubmit = async() => {
     }
 
     if (action === ACTIONS.UPDATE) {
-        console.log('here');
         const { ok } = await updateGroup(inputValues.value, group.id);
         isOk = ok;        
     }

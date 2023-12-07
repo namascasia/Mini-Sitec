@@ -22,6 +22,14 @@ const onEdit = (group) => {
     modalRef.value.openModal();
 }
 
+const getSubjectName = (group) => {
+    return store.subjects.find(subject => subject.id == group.subjectId).name;
+}
+
+const getTeacherName = (group) => {
+    return store.teachers.find(teacher => teacher.id == group.teacherId).name;
+}
+
 const headerTable = ['Materia', 'Grupo', 'Maestro', 'Limite alumnos', 'Inscritos', 'Horario Lunes',
 'Horario Martes','Horario Miercoles','Horario Jueves','Horario Viernes', 'Acciones'];
 
@@ -47,9 +55,9 @@ let numGrupos = 0;
             </div>
             <ul class="body">
                 <li class="row" v-for="group in store.groups.slice(offset, limit)">
-                    <p>{{ group.subjectId }}</p>
+                    <p>{{ getSubjectName(group) }}</p>
                     <p>{{ group.id }}</p>
-                    <p>{{ group.teacherId }}</p>
+                    <p>{{ getTeacherName(group) }}</p>
                     <p>{{ group.studentsLimit }}</p>
                     <p>{{ group.inscribed }}</p>
                     <p>{{ group.scheduleMonday }}</p>
