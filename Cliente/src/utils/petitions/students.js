@@ -52,7 +52,6 @@ export const deleteStudent = async (studentId) => {
 
 export const updateStudent = async (student) => {
 
-    console.log(student);
     const { data, status } = await api.put(`/students/update/${student.nControl}`, student);
 
     if (status >= HttpStatusCode.BadRequest) {
@@ -61,7 +60,6 @@ export const updateStudent = async (student) => {
     }
 
     const studentIndex = store.students.findIndex(s => s.nControl == student.nControl);
-    console.log(store.students[studentIndex]);
     store.students[studentIndex] = student;
     notify(data.message);
     return { ok: true };

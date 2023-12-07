@@ -7,12 +7,20 @@ import Button from '../../components/Button/Button.vue';
 import ModalForm from '../../components/ModalForm/ModalForm.vue';
 import FormAlumno from '../../components/Forms/alumnos/FormAlumno.vue';
 import { STATUS } from '../../utils/constants/status.contants';
-import FormEditAlumno from '../../components/Forms/alumnos/FormEditAlumno.vue';
+import { ACTIONS } from '../../utils/constants/actions';
 
 const modalRef = ref(null);
 const studentToEdit = ref(null);
+const action = ref(ACTIONS.CREATE);
 const store = useStore();
 const { page, offset, limit, nextPage, previousPage } = usePagination('students');
+
+const onEdit = (student) => {
+    studentToEdit.value = student;
+    action.value = ACTIONS.UPDATE;
+    modalRef.value.openModal();
+    console.log(studentToEdit);
+}
 
 const activeStudents = computed(() => {
     return store.students.filter(student => student.status !== STATUS.DELETED ).length;
@@ -29,7 +37,7 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
                 <h2>ALUMNOS</h2>
             </ariticle>
             <ariticle class="infoDer">
-                <Button @click="modalRef.openModal()" text="Agregar alumno" />
+                <Button @click="action = ACTIONS.CREATE, modalRef.openModal()" text="Agregar alumno" />
             </ariticle>
         </header>
         <article class="containerTable">
@@ -45,7 +53,7 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
                     <p>{{ student.career }}</p>
                     <p>{{ student.status }}</p>
                     <div>
-                        <img @click="studentToEdit = student, modalRef.openModal()" class="edit" src="/img/note.png" alt="editar">  
+                        <img @click="studentToEdit = student, action = ACTIONS.UPDATE, modalRef.openModal()" class="edit" src="/img/note.png" alt="editar">  
                         <button class="delete_button" :disabled="student.status === STATUS.DELETED">
                             <img @click="deleteStudent(student.nControl)" class="delete" :class="student.status === STATUS.DELETED ? 'disabled' : ''" src="/img/delete.png" alt="borrar">
                         </button>
@@ -56,9 +64,9 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
         </article>
         <article class="containerPrevNext">
             <article class="containerButtonsText">
-                <button @click="previousPage()">⟸ Prev</button>
+                <button @click="previousPage()" :disabled="store.students.length === 0">⟸ Prev</button>
                 <label class="counterPage">{{ page + 1 }}</label>
-                <button @click="nextPage()">Next ⟹</button>
+                <button @click="nextPage()" :disabled="store.students.length === 0">Next ⟹</button>
             </article>
         </article>  
         <article class="containerNumEstudiantes">
@@ -66,8 +74,7 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
             <label> Existen {{ activeStudents }} alumnos</label>
         </article>
         <ModalForm ref="modalRef">
-            <FormAlumno v-if="!studentToEdit" :close-modal="modalRef.closeModal" />
-            <FormEditAlumno v-if="studentToEdit" :student="studentToEdit" :close-modal="modalRef.closeModal" />
+            <FormAlumno :close-modal="modalRef.closeModal" :action="action" :student="studentToEdit" />
         </ModalForm>
     </section>    
 </template>
