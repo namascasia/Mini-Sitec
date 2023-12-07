@@ -12,6 +12,7 @@ import { ACTIONS } from '../../utils/constants/actions';
 const modalRef = ref(null);
 const studentToEdit = ref(null);
 const action = ref(ACTIONS.CREATE);
+
 const store = useStore();
 const { page, offset, limit, nextPage, previousPage } = usePagination('students');
 
@@ -19,12 +20,11 @@ const onEdit = (student) => {
     studentToEdit.value = student;
     action.value = ACTIONS.UPDATE;
     modalRef.value.openModal();
-    console.log(studentToEdit);
 }
 
 const activeStudents = computed(() => {
     return store.students.filter(student => student.status !== STATUS.DELETED ).length;
-})
+});
 
 const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
 </script>
@@ -37,7 +37,7 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
                 <h2>ALUMNOS</h2>
             </ariticle>
             <ariticle class="infoDer">
-                <Button @click="action = ACTIONS.CREATE, modalRef.openModal()" text="Agregar alumno" />
+                <Button @click="onEdit" text="Agregar alumno" />
             </ariticle>
         </header>
         <article class="containerTable">
@@ -53,7 +53,7 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
                     <p>{{ student.career }}</p>
                     <p>{{ student.status }}</p>
                     <div>
-                        <img @click="studentToEdit = student, action = ACTIONS.UPDATE, modalRef.openModal()" class="edit" src="/img/note.png" alt="editar">  
+                        <img @click="onEdit(student)" class="edit" src="/img/note.png" alt="editar">  
                         <button class="delete_button" :disabled="student.status === STATUS.DELETED">
                             <img @click="deleteStudent(student.nControl)" class="delete" :class="student.status === STATUS.DELETED ? 'disabled' : ''" src="/img/delete.png" alt="borrar">
                         </button>

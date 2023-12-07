@@ -28,3 +28,18 @@ export const createSubject = async (subject) => {
     notify(data.message);
     return { ok: true };
 }
+
+export const updateSubject = async (subject) => {
+    const { data, status } = await api.put(`/subjects/update/${subject.id}`, subject);
+
+    if (status >= HttpStatusCode.BadRequest) {
+        notify(data.message, MESSAGES_TYPES.ERROR);
+        return { ok: false };
+    }
+
+    const subjectIndex = store.subjects.findIndex(s => s.id === subject.id);
+    store.subjects[subjectIndex] = subject;
+    notify(data.message);
+    return { ok: true };
+
+}

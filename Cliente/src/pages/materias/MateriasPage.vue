@@ -5,8 +5,18 @@ import ModalForm from '../../components/ModalForm/ModalForm.vue';
 import FormMateria from '../../components/Forms/materias/FormMateria.vue';
 import { useStore } from '../../store/store';
 import { usePagination } from '../../composables/usePagination';
+import { ACTIONS } from '../../utils/constants/actions';
 
 const modalRef = ref(null);
+const subjectToEdit = ref(null);
+const action = ref(ACTIONS.CREATE);
+
+const onEdit = (subject) => {
+    subjectToEdit.value = subject;
+    action.value = ACTIONS.UPDATE;
+    modalRef.value.openModal(); 
+}
+
 const store = useStore();
 const { page, limit, offset, nextPage, previousPage } = usePagination('subjects');
 
@@ -21,7 +31,7 @@ const headerTable = ['Clave materia', 'Nombre', 'Creditos', 'Acciones'];
                 <h2>MATERIAS</h2>
             </ariticle>
             <ariticle class="infoDer">
-                <Button @click="modalRef.openModal()" text="Agregar materia" />
+                <Button @click="action = ACTIONS.CREATE, modalRef.openModal()" text="Agregar materia" />
             </ariticle>
         </header>
         <article class="containerTable">
@@ -36,7 +46,7 @@ const headerTable = ['Clave materia', 'Nombre', 'Creditos', 'Acciones'];
                     <p>{{ subject.name }}</p>
                     <p>{{ subject.credits }}</p>
                     <div>
-                        <img class="edit" src="/img/note.png" alt="editar">  
+                        <img @click="onEdit(subject)" class="edit" src="/img/note.png" alt="editar">  
                         <img class="delete" src="/img/delete.png" alt="borrar">
                     </div>
                 </li>
@@ -55,7 +65,7 @@ const headerTable = ['Clave materia', 'Nombre', 'Creditos', 'Acciones'];
         </article>
 
         <ModalForm ref="modalRef">
-            <FormMateria :close-modal="modalRef.closeModal" />
+            <FormMateria :close-modal="modalRef.closeModal" :action="action" :subject="subjectToEdit" />
         </ModalForm>
     </section>    
 </template>
