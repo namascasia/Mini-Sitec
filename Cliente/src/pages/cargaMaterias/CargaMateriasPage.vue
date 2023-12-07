@@ -1,18 +1,73 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { useStore } from '../../store/store';
+import { inscribe, dismissInscribe } from '../../utils/petitions/groups';
+import { MESSAGES_TYPES, notify } from '../../utils/helpers';
+import { api } from '../../api';
+import { HttpStatusCode } from 'axios';
 
 const store = useStore();
 const groupsSelected = ref([]);
+const loadDone = ref(false);
+const student = ref('');
 
-const selectGroup = (group) => {
-    const selectedGroupIndex = store.groups.findIndex(g => g.id == group.id);
-    store.groups[selectedGroupIndex].inscribed = store.groups[selectedGroupIndex].inscribed + 1;
+const initAcademicLoad = async() => {
+    if (student.value.length === 0) return;
 
-    groupsSelected.value.push(group)
+    if (groupsSelected.value.length === 0) return;
+
+    const subjectsSelected = groupsSelected.value.map(groupsSelected => (groupsSelected.subjectId));
+
+    const creditsOfSelectedSubjects = store.subjects.filter(subject => (
+        subjectsSelected.includes(subject.id)
+    ))
+    .map(subject => (
+        subject.credits
+    ));
+
+    const credits = creditsOfSelectedSubjects.reduce((prev, current) => prev + current, 0);
+
+    if (credits < 10) {
+        notify('Debe de acumular minimamente 10 creditos en materias', MESSAGES_TYPES.INFO);
+        return;
+    }
+
+    const loads = groupsSelected.value.map(groupSelected => ({
+        subjectId: groupSelected.subjectId,
+        groupId: groupSelected.id,
+        studentId: student.value
+    }));
+
+    const { data, status } = await api.post('/inscribe/create', {
+        loads
+    });
+
+    if (status >= HttpStatusCode.BadRequest) {
+        notify(data.message, MESSAGES_TYPES.ERROR);
+        return;
+    }
+
+    loadDone.value = true;
+    notify(data.message);
 }
 
-const removeGroup = (group) => {
+const selectGroup = async(group) => {
+
+    const { ok } = await inscribe(group.id);
+
+    if (!ok) return;
+
+    const selectedGroupIndex = store.groups.findIndex(g => g.id == group.id);
+    store.groups[selectedGroupIndex].inscribed = store.groups[selectedGroupIndex].inscribed + 1;
+    groupsSelected.value.push(group)
+    
+}
+
+const removeGroup = async(group) => {
+
+    const { ok } = await dismissInscribe(group.id);
+    if (!ok) return;
+
     const selectedGroupIndex = store.groups.findIndex(g => g.id == group.id);
     store.groups[selectedGroupIndex].inscribed = store.groups[selectedGroupIndex].inscribed + 1;
 
@@ -62,17 +117,17 @@ const getSubjectCredits = (groupSelected) => {
             </article>
         </section>
         <section class="containerPreview">
-            <article class="datosAlumno">
+            <form @submit.prevent="initAcademicLoad" class="datosAlumno">
                 <h2> Preview de carga</h2>
                 <label for="nControl">N. control</label>
-                <select id="nControl">
+                <select v-model="student" id="nControl">
                     <option value="" disabled selected>Seleccione</option>
                     <option v-for="student in store.students" :value="student.nControl">
                         {{ student.nControl }}
                     </option>
                 </select>
-                <button>Cargar</button>
-            </article>  
+                <button :disabled="loadDone" :class="loadDone && 'disabled'">Cargar</button>
+            </form>  
             <ul class="previewHorario">
                 <li v-for="groupSelected in groupsSelected" :key="groupSelected.id">
                     <div class="infos">
@@ -83,27 +138,12 @@ const getSubjectCredits = (groupSelected) => {
                             <p><strong>Horario:</strong> {{ groupSelected.scheduleMonday }}</p>
                         </div>
                     </div>
-                    <button @click="removeGroup(groupSelected)">
+                    <button @click="removeGroup(groupSelected)" :disabled="loadDone" :class="loadDone && 'disabled'">
                         <img src="/img/delete.png" alt="icono eliminar">
                         Quitar grupo
                     </button>
                 </li>
             </ul>
-
-<!-- 
-            <article class="previewHorario">
-                <ul v-for="groupSelected in groupsSelected" :key="groupSelected.id">
-                    <li> <figure /> </li>
-                    <li>
-                        <label>{{ store.subjects.find(subject => groupSelected.subjectId === subject.id).name }}</label> 
-                        <label>Creditos: {{ store.subjects.find(subject => groupSelected.subjectId === subject.id).credits }}</label>
-                        <label>{{ groupSelected.scheduleMonday }}</label>
-                    </li>
-                    <li>
-                        <img @click="removeGroup(groupSelected)" src="/img/delete.png" alt="eliminar">
-                    </li>
-                </ul>
-            </article> -->
         </section>
     </section>
 </template>

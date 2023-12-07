@@ -70,6 +70,28 @@ export const updateGroup = async (group) => {
 
 }
 
+export const inscribe = async (groupId) => {
+    const { data, status } = await api.put(`/groups/inscribe/${groupId}`);
+
+    if (status >= HttpStatusCode.BadRequest) {
+        notify(data.message, MESSAGES_TYPES.ERROR);
+        return { ok: false };
+    }
+
+    return { ok: true };
+}
+
+export const dismissInscribe = async (groupId) => {
+    const { data, status } = await api.put(`/groups/dismiss-inscribe/${groupId}`);
+
+    if (status >= HttpStatusCode.BadRequest) {
+        notify(data.message, MESSAGES_TYPES.ERROR);
+        return { ok: false };
+    }
+
+    return { ok: true };
+}
+
 export const deleteGroup = async (groupId) => {
 
     const isOk = await confirm('grupo');
