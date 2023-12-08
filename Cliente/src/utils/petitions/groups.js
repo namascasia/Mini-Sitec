@@ -1,10 +1,9 @@
 import { api } from '../../api';
-import { MESSAGES_TYPES, confirm, notify } from '../helpers'
+import { MESSAGES_TYPES, confirmDelete, notify } from '../helpers'
 import { useStore } from '../../store/store';
 import { HttpStatusCode } from 'axios';
 
 const store = useStore();
-
 
 export const getGroups = async () => {
     const { data, status } = await api.get('/groups/get');
@@ -94,7 +93,7 @@ export const dismissInscribe = async (groupId) => {
 
 export const deleteGroup = async (groupId) => {
 
-    const isOk = await confirm('grupo');
+    const isOk = await confirmDelete('grupo');
 
     if (!isOk) return;
 

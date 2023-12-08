@@ -1,7 +1,7 @@
 import { HttpStatusCode } from "axios";
 import { api } from "../../api";
 import { useStore } from '../../store/store';
-import { MESSAGES_TYPES, confirm, notify } from "../helpers";
+import { MESSAGES_TYPES, confirmDelete, notify } from "../helpers";
 import { STATUS } from "../constants/status.contants";
 
 const store = useStore();
@@ -46,7 +46,7 @@ export const updateTeacher = async (teacher) => {
 
 export const deleteTeacher = async (teacherId) => {
 
-    const isOk = await confirm('maestro');
+    const isOk = await confirmDelete('maestro');
 
     if (!isOk) return;
 

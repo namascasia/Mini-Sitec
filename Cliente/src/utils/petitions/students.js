@@ -1,4 +1,4 @@
-import { MESSAGES_TYPES, notify, confirm } from "../helpers";
+import { MESSAGES_TYPES, notify, confirmDelete } from "../helpers";
 import { useStore } from "../../store/store";
 import { api } from '../../api'
 import { HttpStatusCode } from "axios";
@@ -32,7 +32,7 @@ export const getStudents = async () => {
 
 export const deleteStudent = async (studentId) => {
 
-    const isOk = await confirm();
+    const isOk = await confirmDelete();
 
     if (!isOk) return;
 

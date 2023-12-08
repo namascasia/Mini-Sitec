@@ -164,9 +164,8 @@
         background-color: #fff;
         border-radius: 5px;
         cursor: pointer;
-        /* position: absolute; */
         animation: leftToRight 0.3s;
-        transition: all 0.2s;
+        transition: all 0.3s;
 
         &:hover {
             outline: 1px solid #1F3B73;
@@ -267,3 +266,6 @@
     pointer-events: none;
 }
 
+.error {
+    outline: 2px solid red;
+}

@@ -10,11 +10,21 @@ const store = useStore();
 const groupsSelected = ref([]);
 const loadDone = ref(false);
 const student = ref('');
+const studentIsNotSelected = ref(false);
 
 const initAcademicLoad = async() => {
-    if (student.value.length === 0) return;
+    if (student.value.length === 0) {
+        studentIsNotSelected.value = true;
+        notify('Necesita elegir un estudiante para hacer la carga', MESSAGES_TYPES.INFO);
+        return;
+    }
 
-    if (groupsSelected.value.length === 0) return;
+    if (groupsSelected.value.length === 0) {
+        notify('No ha seleccionado ningun grupo', MESSAGES_TYPES.INFO);
+        return;
+    }
+
+    
 
     const subjectsSelected = groupsSelected.value.map(groupsSelected => (groupsSelected.subjectId));
 
@@ -123,7 +133,7 @@ const getTeacherName = (groupSelected) => {
             <form @submit.prevent="initAcademicLoad" class="datosAlumno">
                 <h2> Preview de carga</h2>
                 <label for="nControl">N. control</label>
-                <select v-model="student" id="nControl">
+                <select v-model="student" id="nControl" :class="studentIsNotSelected && 'error'" @click="studentIsNotSelected = false">
                     <option value="" disabled selected>Seleccione</option>
                     <option v-for="student in store.students" :value="student.nControl">
                         {{ student.nControl }}
