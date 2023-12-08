@@ -11,8 +11,10 @@ export class Server {
             students: '/api/students',
             teachers: '/api/teachers',
             subjects: '/api/subjects',
-            groups: '/api/groups'
+            groups: '/api/groups',
+            inscribe: '/api/inscribe'
         };
+
         this.port = 3000;
 
         this.middlewares();
@@ -27,6 +29,7 @@ export class Server {
         this.app.use(this.paths.teachers, routers.teachersRouter);
         this.app.use(this.paths.subjects, routers.subjectsRouter);
         this.app.use(this.paths.groups, routers.groupsRouter);
+        this.app.use(this.paths.inscribe, routers.inscribeRouter);
     }
 
     middlewares() {

@@ -15,4 +15,6 @@ router.delete('/delete/:id', groupsController.deleteGroup);
 
 router.put('/inscribe/:id', groupsController.inscribe);
 
+router.put('/dismiss-inscribe/:id', groupsController.dismissInscribe);
+
 export default router;

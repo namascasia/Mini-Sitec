@@ -64,6 +64,7 @@ export class GroupsController {
 
     async updateGroup(req = request, res = response) {
         const { subjectId, id, teacherId, studentsLimit, schedules } = req.body;
+        console.log(req.body);
         const groupId = req.params.id;
         try {
             const [group] = await db.select()
@@ -77,7 +78,6 @@ export class GroupsController {
                 });
             }
 
-            console.log(group.inscribed);
 
             await db.update(schemas.groups)
                 .set({
@@ -120,6 +120,32 @@ export class GroupsController {
             await db.update(schemas.groups)
                 .set({
                     inscribed: group.inscribed + 1
+                })
+                .where(eq(schemas.groups.id, groupId));
+
+            res.json({
+                data: null,
+                message: null
+            });
+        } catch (error) {
+            res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).json({
+                data: null,
+                message: 'Ha ocurrido un error al realizar esta operacion, contacte al administrador'
+            });
+        }
+    }
+
+    async dismissInscribe(req = request, res = response) {
+        const groupId = req.params.id;
+        try {
+
+            const [group] = await db.select()
+                .from(schemas.groups)
+                .where(eq(schemas.groups.id, groupId));
+
+            await db.update(schemas.groups)
+                .set({
+                    inscribed: group.inscribed - 1
                 })
                 .where(eq(schemas.groups.id, groupId));
 
