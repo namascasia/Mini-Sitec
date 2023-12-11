@@ -1,7 +1,8 @@
+import { HttpStatusCode } from "axios";
+import { STATUS } from '../constants/status.contants';
 import { MESSAGES_TYPES, notify, confirmDelete } from "../helpers";
 import { useStore } from "../../store/store";
 import { api } from '../../api'
-import { HttpStatusCode } from "axios";
 
 const store = useStore();
 
@@ -43,9 +44,9 @@ export const deleteStudent = async (studentId) => {
         return;
     }
 
-    const newStudents = store.students.filter(student => student.nControl != studentId);
-    console.log(newStudents);
-    store.students = [...newStudents];
+    const index = store.students.findIndex(student => student.nControl === studentId);
+    store.students[index].status = STATUS.DELETED;
+
 
     notify(data.message);
 }

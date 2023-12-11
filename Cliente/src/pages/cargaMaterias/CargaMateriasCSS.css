@@ -57,12 +57,7 @@
             &:hover{
                 background-color: #e6e6e6;
             }
-    
-            & :first-child{
-                font-weight: bold;
-                text-align: center;
-            }
-    
+        
             & p:hover{
                 cursor: pointer;
             }

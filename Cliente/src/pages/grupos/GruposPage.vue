@@ -38,13 +38,12 @@ const getTeacherName = (group) => {
 
 const headerTable = ['Materia', 'Grupo', 'Maestro', 'Limite alumnos', 'Inscritos', 'Horario Lunes',
     'Horario Martes', 'Horario Miercoles', 'Horario Jueves', 'Horario Viernes', 'Acciones'];
-
-let numGrupos = 0;
+console.log(store.groups);
 </script>
 
 <template>
     <MainLayout text="GRUPOS" :headers="headerTable" :add="onCreate">
-        <template>
+        <template #main>
             <li class="row" v-for="group in store.groups.slice(offset, limit)">
                 <p>{{ getSubjectName(group) }}</p>
                 <p>{{ group.id }}</p>
@@ -75,7 +74,7 @@ let numGrupos = 0;
             </article>
             <article class="containerNumEstudiantes">
                 <img src="/img/userBlue.png" alt="user">
-                <label> Existen {{ numGrupos }} grupos</label>
+                <label> Existen {{ store.groups.length }} grupos</label>
             </article>
             <ModalForm ref="modalRef">
                 <FormGrupo :close-modal="modalRef.closeModal" :action="action" :group="groupToEdit" />

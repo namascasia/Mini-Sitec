@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onUnmounted } from 'vue';
 import { useStore } from '../../store/store';
 import { inscribe, dismissInscribe } from '../../utils/petitions/groups';
 import { MESSAGES_TYPES, notify } from '../../utils/helpers';
@@ -106,6 +106,15 @@ const getSubjectCredits = (groupSelected) => {
 const getTeacherName = (groupSelected) => {
     return store.teachers.find(teacher => teacher.id == groupSelected.teacherId).name;
 }
+
+onUnmounted(async() => {
+    if (!loadDone.value) {
+        groupsSelected.value.forEach(async(group) => {
+            await dismissInscribe(group.id);
+            group.inscribed = group.inscribed - 1;
+        })
+    }
+});
 
 </script>
 

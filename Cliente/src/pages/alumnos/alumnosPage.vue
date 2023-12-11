@@ -28,17 +28,17 @@ const onEdit = (student) => {
     modalRef.value.openModal();
 }
 
-const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
+const headersTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
 </script>
 
 <template>
-    <MainLayout text="ALUMNOS" :headers="headerTable" :add="onCreate">
+    <MainLayout text="ALUMNOS" :headers="headersTable" :add="onCreate">
         <template #main>
             <li class="row" v-for="student in store.students.slice(offset, limit)" :key="student.nControl">
                 <p>{{ student.nControl }}</p>
                 <p>{{ student.name }}</p>
                 <p>{{ student.career }}</p>
-                <p>{{ student.status }}</p>
+                <p>{{ student.status === STATUS.ACTIVE ? 'VIGENTE' : 'BAJA' }}</p>
                 <div>
                     <img @click="onEdit(student)" class="edit" src="/img/note.png" alt="editar">  
                     <button class="delete_button" :disabled="student.status === STATUS.DELETED">
@@ -58,10 +58,10 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
             </article>  
             <article class="containerNumEstudiantes">
                 <img src="/img/userBlue.png" alt="user">
-                <label> Existen {{ activeStudents }} alumnos</label>
+                <label> Existen {{ store.students.length }} alumnos</label>
             </article>
             <ModalForm ref="modalRef">
-                <FormAlumno :close-modal="modalRef.closeModal" :student="studentToEdit" />
+                <FormAlumno :close-modal="modalRef.closeModal" :action="action" :student="studentToEdit" />
             </ModalForm>
         </template>
     </MainLayout>
