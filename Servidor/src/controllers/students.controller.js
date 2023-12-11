@@ -2,7 +2,7 @@ import { request, response } from "express";
 import { HTTP_CODES } from "../utils/constants/http-status-codes.js";
 import { db } from "../db/connection.js";
 import { schemas } from "../entities/schemas.js";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { STATUS } from "../utils/constants/constants.js";
 
 export class StudentsController {
@@ -12,6 +12,7 @@ export class StudentsController {
 
             const students = await db.select()
                 .from(schemas.students)
+                .where(eq(schemas.students.status, STATUS.ACTIVE));
 
             res.json({
                 data: students,
