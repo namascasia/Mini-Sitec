@@ -11,9 +11,9 @@ const port = process.env.DATABASE_PORT;
 export const connection = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    database: 'minisitec',
-    password: 'minisitec',
-    port: 3307
+    database: 'pw1213',
+    password: '',
+    // port: 3307
 });
 
 export const db = drizzle(connection);
