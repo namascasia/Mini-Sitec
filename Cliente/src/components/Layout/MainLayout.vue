@@ -20,7 +20,7 @@ defineEmits(['add']);
             </article>
             <article class="infoDer">
                 <Button @click="add">
-                    Agregar
+                    Agregar {{ text.toLowerCase().substring(0, text.length - 1) }}
                 </Button>
             </article>
         </header>
@@ -33,11 +33,11 @@ defineEmits(['add']);
                 </div>
             </div>
             <ul class="body">
-                <slot />
+                <slot name="main" />
             </ul>
+            <slot />
         </article>
         <slot name="footer" />
-        <slot name="modal" />
     </section>
 </template>
 

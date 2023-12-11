@@ -13,10 +13,8 @@ import { deleteGroup } from '../../utils/petitions/groups';
 const modalRef = ref(null);
 const groupToEdit = ref(null);
 const action = ref(ACTIONS.CREATE);
-const layoutRef = ref(null);
 
 const { page, limit, offset, nextPage, previousPage } = usePagination('groups');
-
 const store = useStore();
 
 const onCreate = () => {
@@ -45,25 +43,27 @@ let numGrupos = 0;
 </script>
 
 <template>
-    <MainLayout ref="layoutRef" text="GRUPOS" :headers="headerTable" :add="onCreate">
-        <li class="row" v-for="group in store.groups.slice(offset, limit)">
-            <p>{{ getSubjectName(group) }}</p>
-            <p>{{ group.id }}</p>
-            <p>{{ getTeacherName(group) }}</p>
-            <p>{{ group.studentsLimit }}</p>
-            <p>{{ group.inscribed }}</p>
-            <p>{{ group.scheduleMonday }}</p>
-            <p>{{ group.scheduleTuesday }}</p>
-            <p>{{ group.scheduleWednesday }}</p>
-            <p>{{ group.scheduleThursday }}</p>
-            <p>{{ group.scheduleFriday }}</p>
-            <div>
-                <img @click="onEdit(group)" class="edit" src="/img/note.png" alt="editar">
-                <button @click="deleteGroup(group.id)" class="delete_button">
-                    <img class="delete" src="/img/delete.png" alt="borrar">
-                </button>
-            </div>
-        </li>
+    <MainLayout text="GRUPOS" :headers="headerTable" :add="onCreate">
+        <template>
+            <li class="row" v-for="group in store.groups.slice(offset, limit)">
+                <p>{{ getSubjectName(group) }}</p>
+                <p>{{ group.id }}</p>
+                <p>{{ getTeacherName(group) }}</p>
+                <p>{{ group.studentsLimit }}</p>
+                <p>{{ group.inscribed }}</p>
+                <p>{{ group.scheduleMonday }}</p>
+                <p>{{ group.scheduleTuesday }}</p>
+                <p>{{ group.scheduleWednesday }}</p>
+                <p>{{ group.scheduleThursday }}</p>
+                <p>{{ group.scheduleFriday }}</p>
+                <div>
+                    <img @click="onEdit(group)" class="edit" src="/img/note.png" alt="editar">
+                    <button @click="deleteGroup(group.id)" class="delete_button">
+                        <img class="delete" src="/img/delete.png" alt="borrar">
+                    </button>
+                </div>
+            </li>
+        </template>
         <NoElementsToShow v-if="store.groups.length === 0" title="grupos" />
         <template #footer>
             <article class="containerPrevNext">
@@ -77,8 +77,6 @@ let numGrupos = 0;
                 <img src="/img/userBlue.png" alt="user">
                 <label> Existen {{ numGrupos }} grupos</label>
             </article>
-        </template>
-        <template #modal>
             <ModalForm ref="modalRef">
                 <FormGrupo :close-modal="modalRef.closeModal" :action="action" :group="groupToEdit" />
             </ModalForm>
