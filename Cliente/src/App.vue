@@ -5,10 +5,10 @@ import { getStudents } from './utils/petitions/students';
 import { getSubjects } from './utils/petitions/subjects';
 import { getTeachers } from './utils/petitions/teachers';
 
-getStudents();
-getSubjects();
-getTeachers();
-getGroups();
+// getStudents();
+// getSubjects();
+// getTeachers();
+// getGroups();
 </script>
 
 <template>

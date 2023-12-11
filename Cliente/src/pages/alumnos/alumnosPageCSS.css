@@ -54,7 +54,8 @@ header{
 
 .row{
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    /* grid-auto-flow: column; */
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     padding-top: 10px;
     text-align: center;
     align-items: center;
