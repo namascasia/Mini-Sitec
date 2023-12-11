@@ -1,10 +1,11 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useStore } from '../../../store/store';
 import { ACTIONS } from '../../../utils/constants/actions';
 import { createGroup, updateGroup } from '../../../utils/petitions/groups';
 import Input from '../../Input/Input.vue';
 import Select from '../../Select/Select.vue';
+import { STATUS } from '../../../utils/constants';
 
 const { closeModal, action, group } = defineProps({
     closeModal: Function,
@@ -19,10 +20,8 @@ const { closeModal, action, group } = defineProps({
     }
 });
 
-console.log(action, group);
 
 const isForUpdate = action === ACTIONS.UPDATE;
-const store = useStore();
 
 const INITIAL_STATE = {
     id: isForUpdate ? group.id.toString() : '',
@@ -30,27 +29,20 @@ const INITIAL_STATE = {
     teacherId: isForUpdate ? group.teacherId.toString() : '',
     studentsLimit: isForUpdate ? group.studentsLimit.toString() : '',
     inscribed: isForUpdate ? group.inscribed.toString() : '',
-    scheduleMonday: isForUpdate ? group.scheduleMonday : '',
-    scheduleTuesday: isForUpdate ? group.scheduleTuesday : '',
-    scheduleWednesday: isForUpdate ? group.scheduleWednesday : '',
-    scheduleThursday: isForUpdate ? group.scheduleThursday : '',
-    scheduleFriday: isForUpdate ? group.scheduleFriday : '',
+    schedule: isForUpdate ? group.scheduleMonday : '',
 };
 
+const store = useStore();
 const inputValues = ref(INITIAL_STATE);
+const activeTeachers = computed(() => store.teachers.filter(teacher => teacher.status === STATUS.ACTIVE));
 
 const onSubmit = async() => {
     const { 
         id, subjectId, teacherId, 
-        studentsLimit, scheduleMonday,
-        scheduleTuesday, scheduleWednesday, scheduleThursday,
-        scheduleFriday } = inputValues.value;
-        console.log(inputValues.value);
+        studentsLimit, schedule } = inputValues.value;
     if (
         [
-            id.trim(), subjectId.trim(), teacherId.trim(), studentsLimit.trim(),
-            scheduleMonday.trim(), scheduleTuesday.trim(), scheduleWednesday.trim(), 
-            scheduleThursday.trim(), scheduleFriday.trim()
+            id.trim(), subjectId.trim(), teacherId.trim(), studentsLimit.trim(), schedule.trim()
         ].includes("")
         ) return;
 
@@ -95,18 +87,18 @@ for(let i = 0; i < horas.length - 1; i++) {
             <label for="maestro">Maestro</label>
             <select v-model="inputValues.teacherId" id="maestro">
                 <option value="" disabled selected>Seleccione</option>
-                <option v-for="teacher in store.teachers" :value="teacher.id.toString()">
+                <option v-for="teacher in activeTeachers" :value="teacher.id.toString()">
                     {{ teacher.name }}
                 </option>
             </select>
         </div>
         <Input v-model="inputValues.id" label="Grupo" type="text" place-holder="Grupo" />
         <Input v-model="inputValues.studentsLimit" label="Limite alumnos" type="text" place-holder="Limite Alumnos" />
-        <Select v-model="inputValues.scheduleMonday" label="Horario Lunes"  :values="horarios" />
-        <Select v-model="inputValues.scheduleTuesday" label="Horario Martes"  :values="horarios" />
-        <Select v-model="inputValues.scheduleWednesday" label="Horario Miercoles"  :values="horarios" />
-        <Select v-model="inputValues.scheduleThursday" label="Horario Jueves"  :values="horarios" />
-        <Select v-model="inputValues.scheduleFriday" label="Horario Viernes"  :values="horarios" />
+        <Select v-model="inputValues.schedule" label="Horario Lunes"  :values="horarios" />
+        <Select v-model="inputValues.schedule" disabled label="Horario Martes"  :values="horarios" />
+        <Select v-model="inputValues.schedule" disabled label="Horario Miercoles"  :values="horarios" />
+        <Select v-model="inputValues.schedule" disabled label="Horario Jueves"  :values="horarios" />
+        <Select v-model="inputValues.schedule" disabled label="Horario Viernes"  :values="horarios" />
     </form>
     <button @click="onSubmit" class="buttonSave">Guardar</button> 
 </template>

@@ -7,6 +7,7 @@ import { useStore } from '../../store/store';
 import { usePagination } from '../../composables/usePagination';
 import { STATUS, ACTIONS } from '../../utils/constants';
 import { deleteTeacher } from '../../utils/petitions/teachers';
+import NoElementsToShow from '../../components/NoElements/NoElementsToShow.vue';
 
 const modalRef = ref(null);
 const teacherToEdit = ref(null);
@@ -46,7 +47,7 @@ const headerTable = ['Clave maestro', 'Nombre', 'Departamento', 'Estatus', 'Acci
                     <p>{{ teacher.id }}</p>
                     <p>{{ teacher.name }}</p>
                     <p>{{ teacher.department }}</p>
-                    <p>{{ teacher.status }}</p>
+                    <p>{{ teacher.status === STATUS.ACTIVE ? 'VIGENTE' : 'BAJA' }}</p>
                     <div>
                         <img @click="onEdit(teacher)" class="edit" src="/img/note.png" alt="editar">  
                         <button class="delete_button" :disabled="teacher.status === STATUS.DELETED">
@@ -55,6 +56,7 @@ const headerTable = ['Clave maestro', 'Nombre', 'Departamento', 'Estatus', 'Acci
                     </div>
                 </li>
             </ul>
+            <NoElementsToShow v-if="store.teachers.length === 0" title="maestros"/>
         </article>
         <article class="containerPrevNext">
             <article class="containerButtonsText">

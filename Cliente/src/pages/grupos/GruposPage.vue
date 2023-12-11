@@ -7,6 +7,7 @@ import { useStore } from '../../store/store';
 import { usePagination } from '../../composables/usePagination';
 import { ACTIONS } from '../../utils/constants';
 import { deleteGroup } from '../../utils/petitions/groups';
+import NoElementsToShow from '../../components/NoElements/NoElementsToShow.vue';
 
 const modalRef = ref(null);
 const groupToEdit = ref(null);
@@ -73,6 +74,7 @@ let numGrupos = 0;
                     </div>
                 </li>
             </ul>
+            <NoElementsToShow v-if="store.groups.length === 0" title="grupos"/>
         </article>
         <article class="containerPrevNext">
             <article class="containerButtonsText">

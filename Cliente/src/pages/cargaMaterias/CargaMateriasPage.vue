@@ -1,16 +1,19 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useStore } from '../../store/store';
 import { inscribe, dismissInscribe } from '../../utils/petitions/groups';
 import { MESSAGES_TYPES, notify } from '../../utils/helpers';
 import { api } from '../../api';
 import { HttpStatusCode } from 'axios';
+import { STATUS } from '../../utils/constants';
+import NoElementsToShow from '../../components/NoElements/NoElementsToShow.vue';
 
 const store = useStore();
 const groupsSelected = ref([]);
 const loadDone = ref(false);
 const student = ref('');
 const studentIsNotSelected = ref(false);
+const activeStudents = computed(() => store.students.filter(student => student.status === STATUS.ACTIVE));
 
 const initAcademicLoad = async() => {
     if (student.value.length === 0) {
@@ -23,8 +26,6 @@ const initAcademicLoad = async() => {
         notify('No ha seleccionado ningun grupo', MESSAGES_TYPES.INFO);
         return;
     }
-
-    
 
     const subjectsSelected = groupsSelected.value.map(groupsSelected => (groupsSelected.subjectId));
 
@@ -86,13 +87,13 @@ const removeGroup = async(group) => {
 }
 
 const disableGroup = (group) => {
-    const isGroupdSelected = groupsSelected.value.some(g => g.id === group.id);
-    const isScheduleCollapsing = groupsSelected.value.some(g => g.scheduleMonday === group.scheduleMonday);
+    const isGroupdSelected = groupsSelected.value.some(g => g.id == group.id);
+    const isScheduleCollapsing = groupsSelected.value.some(g => g.scheduleMonday == group.scheduleMonday);
+    const isSubjectAlreadySelected = groupsSelected.value.some(g => g.subjectId == group.subjectId );
     const isGroupFull = group.inscribed === group.studentsLimit;
     
-    return isGroupdSelected || isScheduleCollapsing || isGroupFull;
+    return isGroupdSelected || isScheduleCollapsing || isGroupFull || isSubjectAlreadySelected;
 }
-
 
 const getSubjectName = (groupSelected) => {
     return store.subjects.find(subject => groupSelected.subjectId === subject.id).name;
@@ -127,6 +128,7 @@ const getTeacherName = (groupSelected) => {
                         <h2>GRUPO LLENO</h2>
                     </div>
                 </button>
+                <NoElementsToShow v-if="store.groups.length === 0" title="grupos" />
             </article>
         </section>
         <section class="containerPreview">
@@ -135,7 +137,7 @@ const getTeacherName = (groupSelected) => {
                 <label for="nControl">N. control</label>
                 <select v-model="student" id="nControl" :class="studentIsNotSelected && 'error'" @click="studentIsNotSelected = false">
                     <option value="" disabled selected>Seleccione</option>
-                    <option v-for="student in store.students" :value="student.nControl">
+                    <option v-for="student in activeStudents" :value="student.nControl">
                         {{ student.nControl }}
                     </option>
                 </select>

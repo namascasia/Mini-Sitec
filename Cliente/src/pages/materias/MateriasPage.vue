@@ -7,6 +7,7 @@ import { useStore } from '../../store/store';
 import { usePagination } from '../../composables/usePagination';
 import { deleteSubject } from '../../utils/petitions/subjects';
 import { ACTIONS, STATUS } from '../../utils/constants';
+import NoElementsToShow from '../../components/NoElements/NoElementsToShow.vue';
 
 const modalRef = ref(null);
 const subjectToEdit = ref(null);
@@ -54,6 +55,7 @@ const headerTable = ['Clave materia', 'Nombre', 'Creditos', 'Acciones'];
                     </div>
                 </li>
             </ul>
+            <NoElementsToShow v-if="store.subjects.length === 0" title="materias" />
         </article>
         <article class="containerPrevNext">
             <article class="containerButtonsText">

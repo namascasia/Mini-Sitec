@@ -43,8 +43,9 @@ export const deleteStudent = async (studentId) => {
         return;
     }
 
-    const index = store.students.findIndex(student => student.nControl === studentId);
-    store.students[index].status = 'B';
+    const newStudents = store.students.filter(student => student.nControl != studentId);
+    console.log(newStudents);
+    store.students = [...newStudents];
 
     notify(data.message);
 }

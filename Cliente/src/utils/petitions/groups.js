@@ -21,22 +21,21 @@ export const createGroup = async (group) => {
     const newGroup = {
         ...group,
         schedules: [
-            group.scheduleMonday,
-            group.scheduleTuesday,
-            group.scheduleWednesday,
-            group.scheduleThursday,
-            group.scheduleFriday
+            group.schedule,
+            group.schedule,
+            group.schedule,
+            group.schedule,
+            group.schedule
         ]
     };
 
     const { data, status } = await api.post('/groups/create', newGroup);
-    console.log(data);
     if (status >= HttpStatusCode.BadRequest) {
         notify(data.message, MESSAGES_TYPES.ERROR);
         return { ok: false };
     }
 
-    store.groups.push(group);
+    store.groups.push(data.data);
     notify(data.message);
     return { ok: true };
 }
@@ -46,11 +45,11 @@ export const updateGroup = async (group, groupId) => {
     const newGroup = {
         ...group,
         schedules: [
-            group.scheduleMonday,
-            group.scheduleTuesday,
-            group.scheduleWednesday,
-            group.scheduleThursday,
-            group.scheduleFriday
+            group.schedule,
+            group.schedule,
+            group.schedule,
+            group.schedule,
+            group.schedule
         ]
     };
 
@@ -62,8 +61,7 @@ export const updateGroup = async (group, groupId) => {
     }
 
     const groupIndex = store.groups.findIndex(({ id }) => id == group.id);
-    console.log({ groupIndex });
-    store.groups[groupIndex] = group;
+    store.groups[groupIndex] = data.data;
     notify(data.message);
     return { ok: true };
 

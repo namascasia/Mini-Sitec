@@ -60,7 +60,7 @@ const onSubmit = async() => {
             <label for="Estatus">Estatus</label>
             <select v-model="inputValues.status" id="Estatus">
                 <option value="" disabled >Seleccione</option>
-                <option value="V">Activo</option>
+                <option value="V">Vigente</option>
                 <option value="B">Baja</option>
             </select>
         </div>

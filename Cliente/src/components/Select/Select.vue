@@ -2,7 +2,8 @@
 const { label, modelValue, values } = defineProps({
     label: String,
     modelValue: String,
-    values: String
+    values: String,
+    disabled: Boolean
 })
 
 defineEmits(['update:modelValue']);
@@ -13,7 +14,7 @@ defineEmits(['update:modelValue']);
 <template>
     <div class="info">
         <label :for="label">{{ label }}</label>
-        <select :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" :id="label">
+        <select :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" :id="label" :disabled="disabled">
             <option value="" selected disabled>Seleccione</option>
             <option v-for="value in values" :value="value" :key="value">
                 {{ value }}

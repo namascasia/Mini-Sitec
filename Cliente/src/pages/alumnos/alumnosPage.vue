@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { deleteStudent } from '../../utils/petitions/students';
 import { useStore } from "../../store/store";
 import { usePagination } from '../../composables/usePagination';
@@ -7,6 +7,7 @@ import Button from '../../components/Button/Button.vue';
 import ModalForm from '../../components/ModalForm/ModalForm.vue';
 import FormAlumno from '../../components/Forms/alumnos/FormAlumno.vue';
 import { STATUS, ACTIONS } from '../../utils/constants';
+import NoElementsToShow from '../../components/NoElements/NoElementsToShow.vue';
 
 const modalRef = ref(null);
 const studentToEdit = ref(null);
@@ -20,10 +21,6 @@ const onEdit = (student) => {
     action.value = ACTIONS.UPDATE;
     modalRef.value.openModal();
 }
-
-const activeStudents = computed(() => {
-    return store.students.filter(student => student.status !== STATUS.DELETED ).length;
-});
 
 const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
 </script>
@@ -50,7 +47,7 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
                     <p>{{ student.nControl }}</p>
                     <p>{{ student.name }}</p>
                     <p>{{ student.career }}</p>
-                    <p>{{ student.status }}</p>
+                    <p>{{ student.status === STATUS.ACTIVE ? 'VIGENTE' : 'BAJA' }}</p>
                     <div>
                         <img @click="onEdit(student)" class="edit" src="/img/note.png" alt="editar">  
                         <button class="delete_button" :disabled="student.status === STATUS.DELETED">
@@ -58,8 +55,8 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
                         </button>
                     </div>
                 </li>
-                <p v-if="store.students.length === 0">No hay estudiantes por mostrar</p>             
             </ul>
+            <NoElementsToShow v-if="store.students.length === 0" title="estudiantes" />
         </article>
         <article class="containerPrevNext">
             <article class="containerButtonsText">
@@ -70,7 +67,7 @@ const headerTable = ['N. control', 'Nombre', 'Carrera', 'Estatus', 'Acciones'];
         </article>  
         <article class="containerNumEstudiantes">
             <img src="/img/userBlue.png" alt="user">
-            <label> Existen {{ activeStudents }} alumnos</label>
+            <label> Existen {{ store.students.length }} alumnos</label>
         </article>
         <ModalForm ref="modalRef">
             <FormAlumno :close-modal="modalRef.closeModal" :action="action" :student="studentToEdit" />
