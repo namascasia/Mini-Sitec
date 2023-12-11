@@ -41,16 +41,21 @@ export class GroupsController {
                 });
             }
 
-
-            await db.insert(schemas.groups).values({
-                id, subjectId, teacherId, studentsLimit,
+            const newGroup = {
+                id,
+                subjectId,
+                teacherId,
+                studentsLimit,
                 scheduleMonday: schedules[0], scheduleTuesday: schedules[1],
                 scheduleWednesday: schedules[2], scheduleThursday: schedules[3],
                 scheduleFriday: schedules[4], inscribed: 0
-            });
+            }
+
+
+            await db.insert(schemas.groups).values(newGroup);
 
             res.status(HTTP_CODES.CREATED).json({
-                data: null,
+                data: newGroup,
                 message: 'Grupo creado exitosamente'
             });
         } catch (error) {
@@ -74,7 +79,7 @@ export class GroupsController {
             if (!group) {
                 return res.status(HTTP_CODES.BAD_REQUEST).json({
                     data: null,
-                    message: `El grupo con la clave ${id} ya existe`
+                    message: `El grupo con la clave ${id} no existe`
                 });
             }
 
@@ -88,8 +93,15 @@ export class GroupsController {
                 })
                 .where(eq(schemas.groups.id, groupId));
 
+
+            const [updatedGroup] = await db.select()
+                .from(schemas.groups)
+                .where(eq(schemas.groups.id, groupId));
+
+            console.log(updatedGroup);
+
             res.json({
-                data: null,
+                data: updatedGroup,
                 message: 'Grupo actualizado exitosamente'
             });
         } catch (error) {

@@ -12,7 +12,7 @@ export class StudentsController {
 
             const students = await db.select()
                 .from(schemas.students)
-                .where(eq(schemas.students.status, STATUS.ACTIVE));
+            // .where(eq(schemas.students.status, STATUS.ACTIVE));
 
             res.json({
                 data: students,
